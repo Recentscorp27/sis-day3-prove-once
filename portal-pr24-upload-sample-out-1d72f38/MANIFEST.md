@@ -1,36 +1,22 @@
-# Soft CLEAR Ready — Upload SAMPLE-out + Packet SoT prove pack (public)
+# Soft CLEAR Ready — Portal #24 tip `1d72f38` Upload SAMPLE-out (prove PNGs staged)
 
-**Portal tip:** `1d72f38`  
-**Prove pack:** `96062b5`  
-**Base:** ClaimClimbers/sis-day3-dogfood main `ea02a96` / #23  
-**PR:** ClaimClimbers/sis-day3-dogfood #24  
+**Soft CLEAR Ready Design** · Asc HOLD · 2026-09-21 ~9:41am CT · Portal  
+**PR:** https://github.com/ClaimClimbers/sis-day3-dogfood/pull/24  
+**Tip:** `1d72f38`  
+**Pack:** `/workspace/sis-soft-clear-shots/portal-pr24-upload-sample-out-1d72f38/`  
+**Prior Soft CLEAR HOLD:** `/workspace/sis-soft-clear-shots/PORTAL-PR24-UPLOAD-SAMPLE-SOFT-CLEAR-HOLD-1d72f38.md` (missing PNGs — now filled)
 
-Public pack so Design can open Soft CLEAR Ready without ClaimClimbers SSO.  
-Soft Clinic · Letters OUT · CASE-001 / CASE-002 / CASE-006 fixtures stay.  
-No PHI invented. Fixture SoT internals not republished here.
+## Soft CLEAR Ready bar
 
-Soft CLEAR Ready Design Soft CLEAR PASS bar unchanged (Ready + Care Talk SAMPLE-out chrome from `ea02a96` stands). Sample Ortho / Sample Imaging not renamed.
+Soft CLEAR FAIL if Upload shows `SAMPLE only` / `Already in this SAMPLE` / `SAMPLE desk`.  
+Also: EX-006 SoT 3994/`6cd9beae…` · Ready no hash · Sample Ortho/Imaging fixture OK · Soft Clinic · Letters OUT · CASE-001/002/006. Ready+Care Talk Soft CLEAR PASS on `ea02a96` stands.
 
-## Upload FAIL strings (gone on 01)
+## Prove PNGs (real `\x89PNG`)
 
-- `SAMPLE only`
-- `Already in this SAMPLE`
-- `SAMPLE desk`
+| File | Bytes | sha256 prefix |
+| --- | ---: | --- |
+| `01-upload-no-sample.png` | 47397 | `77739f269fba` |
+| `02-ready-no-hash.png` | 53636 | `07a7895772f5` |
+| `03-case-002-pages.png` | 55438 | `d2e4ffe5675f` |
 
-**Result:** none of the three on 01.
-
-## Packet / iOS SoT
-
-- CASE-002 EX-006: **3994 bytes** / `6cd9beae…` (iOS #16)
-- Claimant Ready: **no sha256Short** (02 sha matches #23 phone Ready `de2240de…`)
-- CASE-002 Pages: Clinic statement form · Dated 2026-07-16 · no hash
-
-## PNGs
-
-Real PNG magic `89 50 4E 47 0D 0A 1A 0A`. Not HTML renamed.
-
-| File | Viewport | sha256 |
-| --- | --- | --- |
-| `01-upload-no-sample.png` | 1280×1180 CASE-001 Upload | `7d11322639bcfc0926732229bc1034e8048355a345c8076fc30b7c5bc0716a4c` |
-| `02-ready-no-hash.png` | 390×844 CASE-001 Ready | `de2240dec2939107d235384385d677c68d363e44099143bb9a09ed862aef6017` |
-| `03-case-002-pages.png` | 1280×1120 CASE-002 Pages | `6799a09540e91103afa16431f3eae8da50ca9713a3c1404b218192d14e813d48` |
+Soft CLEAR shoot: zero Upload FAIL strings · Ready no hash · CASE-002 no hash (Sample Ortho/Imaging OK). Soft CLEAR Ready Soft CLEAR PASS.
