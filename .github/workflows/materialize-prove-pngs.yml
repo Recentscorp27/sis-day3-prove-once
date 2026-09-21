@@ -1,36 +1,50 @@
-name: materialize-prove-pngs
+name: materialize-prove-pack
 on:
   push:
     paths:
-      - "**/*.png.b64"
+      - ".github/pack-b64/**"
       - ".github/workflows/materialize-prove-pngs.yml"
   workflow_dispatch:
 permissions:
   contents: write
 jobs:
-  decode:
+  unpack:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Decode PNG base64 to binary PNG
+      - name: Assemble b64 chunks, extract tar, commit real PNGs + tip-html
         run: |
           set -euo pipefail
-          found=0
-          while IFS= read -r -d '' f; do
-            out="${f%.b64}"
-            base64 -d "$f" > "$out"
-            file "$out"
-            sha256sum "$out"
-            python3 -c "import pathlib,sys; b=pathlib.Path(sys.argv[1]).read_bytes(); assert b[:8]==bytes.fromhex('89504e470d0a1a0a'), 'not png'" "$out"
-            found=1
-          done < <(find . -name '*.png.b64' -print0)
-          test "$found" = 1
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add -- 'portal-pr23-sample-out-5f84300/*.png'
-          if git diff --cached --quiet; then
-            echo "PNGs already present"
+          shopt -s nullglob
+          chunks=(.github/pack-b64/pack.b64.*)
+          echo "chunks=${#chunks[@]}"
+          if [ "${#chunks[@]}" -lt 10 ]; then
+            echo "waiting for all 10 chunks"
             exit 0
           fi
-          git commit -m "Materialize Soft CLEAR prove PNGs (tip 5f84300)"
+          cat "${chunks[@]}" | tr -d '\n' | base64 -d > /tmp/pack.tgz
+          python3 - <<'PY'
+          import tarfile, hashlib, pathlib
+          tf = tarfile.open('/tmp/pack.tgz', 'r:gz')
+          tf.extractall('.')
+          want = {
+            'portal-pr23-sample-out-5f84300/01-ready-phone-no-sample.png': 'de2240dec2939107d235384385d677c68d363e44099143bb9a09ed862aef6017',
+            'portal-pr23-sample-out-5f84300/02-care-talk-no-sample.png': '64334918059a66d5252478fba43dee5221fbb7ae84d4011a99e5fea6e3d5be14',
+            'portal-pr23-sample-out-5f84300/03-desk-ready-no-sample.png': 'b0622a8dbb29c8e04c03a7d19be74a79add9fcd539a396ce5a5601fec690d036',
+          }
+          for path, expect in want.items():
+              b = pathlib.Path(path).read_bytes()
+              assert b[:8] == bytes.fromhex('89504e470d0a1a0a'), path
+              got = hashlib.sha256(b).hexdigest()
+              assert got == expect, (path, got)
+              print(path, 'ok', got)
+          PY
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -- 'portal-pr23-sample-out-5f84300'
+          if git diff --cached --quiet; then
+            echo "pack already materialized"
+            exit 0
+          fi
+          git commit -m "Materialize Soft CLEAR prove pack PNGs + tip-html (tip 5f84300)"
           git push
