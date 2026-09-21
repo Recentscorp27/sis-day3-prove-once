@@ -33,7 +33,7 @@
   --space-3: 24px;
   --space-4: 40px;
   --space-5: 72px;
-  --desk-max: 1100px;
+  --desk-max: 1180px;
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
   --shadow-quiet: 0 1px 0 rgba(36, 48, 44, 0.04), 0 14px 36px rgba(36, 48, 44, 0.06);
 }
