@@ -1,0 +1,1254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Security in Social · Your desk </title>
+<link rel="stylesheet" href="css/tokens.css"/>
+<link rel="stylesheet" href="css/desk.css"/>
+<link rel="stylesheet" href="css/desk-live.css"/>
+<style id="soft-clear-sample-out">.sample-mark,.sample-mark *{display:none!important;visibility:hidden!important;opacity:0!important;font-size:0!important;width:0!important;height:0!important;overflow:hidden!important}</style></head>
+<body class="sis-desk">
+<a class="skip" href="#panel">Skip to review</a>
+<div class="sample-mark" aria-hidden="true"></div>
+<header class="desk-top">
+  <div class="desk-top-inner">
+    <a class="brand" href="#CASE-001/upload">
+      <span class="brand-mark">Security&nbsp;in&nbsp;Social</span>
+      <span class="brand-sub">Your desk</span>
+    </a>
+    <div class="case-pill"><span class="dot" aria-hidden="true"></span><span id="casePillLabel">CASE-001</span></div>
+  </div>
+</header>
+<div class="desk-shell" id="deskShell">
+  <nav class="case-rail" id="caseRail" aria-label="Your steps"></nav>
+  <main class="pane" id="panel"></main>
+  <aside class="care-rail" id="careRail" hidden aria-label="Care Talk">
+    <div class="care-head">
+      <p class="kicker">Care Talk · on this desk</p>
+      <h2>Talk with Care</h2>
+      <p>Conversation only · Letters OUT</p>
+    </div>
+    <div class="care-body" id="careBody">
+      <div class="care-msg specialist">
+        <span class="who">Care</span>
+        <span id="careOpener">Specialists assemble your file here. Letters stay out. Ask what still feels unclear.</span>
+      </div>
+      <div class="care-msg you">
+        <span class="who">You</span>
+        <span id="careYou">Why does it say not ready to release?</span>
+      </div>
+      <div class="care-msg specialist">
+        <span class="who">Care</span>
+        <span id="careReply">Ready to review is not approved. The file still needs function over time after the MRI.</span>
+      </div>
+    </div>
+    <div class="care-foot">
+      <a class="btn btn-primary care-talk-link" id="talkCare" href="/care-talk/">Continue talking</a>
+      <div class="care-listen">
+        <button type="button" id="listenBtn" aria-pressed="false">Sound off</button>
+        <span id="listenHint">Guide audio. Not a letter.</span>
+        <audio id="careAudio" src="care-smoke.mp3" preload="metadata"></audio>
+      </div>
+    </div>
+  </aside>
+</div>
+<script>
+// C2 freeze — desk MODEL EX-006 now matches Packet Pat hash-freeze file-bytes. Soft CLEAR HARD BLOCK lifted only after this tip exists (Latch still HOLD).
+const MODEL={"stamp":"2026-09-16 ~4:30pm CT","plainDesk":true,"jargonScrub":true,"lettersOut":true,"releaseAllowedClinicalLetters":false,"packetSotSchema":"sis.ios.recordReviewPacket/v1","packetSotPackagedAt":"2026-09-16T16:23:00-05:00","hiaDay3DumpConsumed":true,"shipBar":"A+C+F","cases":[{"id":"CASE-001","identity":{"caseId":"CASE-001","brand":"Security in Social","claimType":"SSDI","stage":"hearing","path":"records-only","hearingDate":"2026-11-15","fictionalToday":null,"fiveBusinessDayWindow":null,"requestedOpinions":["physical_RFC","MSS"],"releaseAllowed":false,"attestation":null},"impairments":["lumbar degenerative disc disease (alleged)","chronic low back pain (alleged / assessment impression in notes)"],"sourceNames":["Sample Ortho Clinic","Sample Imaging Center"],"prioritizedFindings":[{"rank":1,"code":"PHYSICAL_RFC_FAIL","text":"Physical work limits are not supported yet. Environment and hand-use areas lack dated clinic notes","severity":"block","citeExhibits":["EX-001"],"textRaw":"Physical RFC FAIL — environmental + manipulative domains lack dated clinical support"},{"rank":2,"code":"MSS_NEEDS_RECORDS","text":"No clinic statement form from the treating clinic is in the packet yet","severity":"block","citeExhibits":[],"textRaw":"No formal treating-source MSS in packet — facilitation needed"},{"rank":3,"code":"MER_GAP_PCP","text":"No continuous primary-care records for the last 12 months","severity":"warn","citeExhibits":[],"textRaw":"No continuous PCP MER last 12 months"},{"rank":4,"code":"VOCATIONAL_MISSING","text":"No work-history evidence in the packet","severity":"warn","citeExhibits":[],"textRaw":"No vocational / work-history evidence"}],"exhibitInventory":[{"id":"EX-001","filename":"EX-001_treatment_notes_ortho.txt","plainLabel":"EX-001 treatment notes ortho","sourceType":"Clinic visit notes","classOrRole":"treating_notes","date":"2026-06-10","sha256":"324c222384da28a03b7442f63a356ce15d0fa2cde3f6cf4f7cccb3828c21ce12","sha256Short":"324c2223…8c21ce12","bytes":2092,"coversDomains":["sit","stand","walk","lift","postural"],"ocrStatus":"Complete","verified":false,"ranAt":"2026-09-16T15:35:00-05:00","namedFailCodes":[],"exhibitPath":"fixtures/case-001-physical-rfc/exhibits/EX-001_treatment_notes_ortho.txt"},{"id":"EX-002","filename":"EX-002_mri_lumbar_report.txt","plainLabel":"EX-002 mri lumbar report","sourceType":"Imaging / labs","classOrRole":"imaging_labs","date":"2026-06-22","sha256":"69b7fcbd0879abec60a5eaf3bd9993f2aa28d3d098459d62d7aad3e9fd31f593","sha256Short":"69b7fcbd…fd31f593","bytes":1264,"coversDomains":[],"ocrStatus":"Complete","verified":false,"ranAt":"2026-09-16T15:35:00-05:00","namedFailCodes":[],"exhibitPath":"fixtures/case-001-physical-rfc/exhibits/EX-002_mri_lumbar_report.txt"},{"id":"EX-003","filename":"EX-003_medication_list.txt","plainLabel":"EX-003 medication list","sourceType":"Medication list","classOrRole":"medications","date":"2026-06-10","sha256":"ee5ff3a18946fa1b60bc27a96000571893796a22b794891d102c80d03d5e1c2f","sha256Short":"ee5ff3a1…3d5e1c2f","bytes":1001,"coversDomains":[],"ocrStatus":"Complete","verified":false,"ranAt":"2026-09-16T15:35:00-05:00","namedFailCodes":[],"exhibitPath":"fixtures/case-001-physical-rfc/exhibits/EX-003_medication_list.txt"},{"id":"EX-004","filename":"EX-004_function_questionnaire.txt","plainLabel":"EX-004 function questionnaire","sourceType":"Daily function form","classOrRole":"function_questionnaires","date":"2026-07-01","sha256":"654c670aae079f2b99563f8dc251c6a91b582c4553a38c4d0feba46e49990f5e","sha256Short":"654c670a…49990f5e","bytes":1342,"coversDomains":[],"ocrStatus":"Complete","verified":false,"ranAt":"2026-09-16T15:35:00-05:00","namedFailCodes":[],"exhibitPath":"fixtures/case-001-physical-rfc/exhibits/EX-004_function_questionnaire.txt"},{"id":"EX-005","filename":"EX-005_prior_ssa_3288_auth_stub.txt","plainLabel":"EX-005 prior ssa 3288 auth stub","sourceType":"Prior SSA form","classOrRole":"prior_ssa_forms","date":"2026-05-01","sha256":"cd3691cb668ac88cf6a875477ec87e3215af96d05193770a2ed3469b26c3a35a","sha256Short":"cd3691cb…26c3a35a","bytes":982,"coversDomains":[],"ocrStatus":"Complete","verified":false,"ranAt":"2026-09-16T15:35:00-05:00","namedFailCodes":[],"exhibitPath":"fixtures/case-001-physical-rfc/exhibits/EX-005_prior_ssa_3288_auth_stub.txt"}],"gap":{"reportPath":"fixtures/case-001-physical-rfc/gap-report.md","operatorSheetPath":"fixtures/case-001-physical-rfc/operator-gap-sheet.md","gapFlags":null,"missingMer":null,"informedNotSubmitted":null},"supportability":{"path":"fixtures/case-001-physical-rfc/supportability.json","physical_RFC":"FAIL","MSS":"NEEDS_RECORDS","mental_MRFC":null,"fail_domains":[],"needs_records_domains":[],"releaseAllowed":false,"attestation":null,"statusEnum":"PASS|FAIL|NEEDS_RECORDS"},"audit":{"releaseAllowed":false,"attestation":null,"humanConfirmGate":"Specialists review the file. Letters OUT. Not ready to release.","ocrCompleteNotVerified":true,"reconciledAt":"2026-09-15T16:39:54Z","packetOwnerScreens":["A_exhibit_inventory","C_gap_supportability","F_audit"],"letters":"OUT","sampleOnly":true,"immutableHashList":["324c222384da28a03b7442f63a356ce15d0fa2cde3f6cf4f7cccb3828c21ce12","69b7fcbd0879abec60a5eaf3bd9993f2aa28d3d098459d62d7aad3e9fd31f593","ee5ff3a18946fa1b60bc27a96000571893796a22b794891d102c80d03d5e1c2f","654c670aae079f2b99563f8dc251c6a91b582c4553a38c4d0feba46e49990f5e","cd3691cb668ac88cf6a875477ec87e3215af96d05193770a2ed3469b26c3a35a"],"packetReadyStamp":null},"watermark":"Not real claimant data","humanConfirmGate":"Specialists review the file. Letters OUT. Not ready to release.","gapReportPreview":"# Your record-review checklist — CASE-001 \n\n**What this is:** A plain checklist of what records you uploaded and what’s missing.  \n**Not a doctor letter.** We do **not** write MSS/RFC/MRFC letters in this review.  \n**Brand:** Security in Social · **For:** DIY Social Security record review  \n**Watermark:** / fake data only — not a real person  \n**Can we release anything?** **No** (`releaseAllowed=false`) — specialists review the file. Letters OUT.\n\n**Demo clock:** min **5–10** · say: “Not enough records — we stop; we don’t invent.”\n\n---\n\n## Your uploaded files (hashed)\n\n| ID | What it is | Short hash |\n| --- | --- | --- |\n| EX-001 | Ortho visit notes (2 visits) | `324c2223…8c21ce12` |\n| EX-002 | Lumbar MRI report | `69b7fcbd…fd31f593` |\n| EX-003 | Medication list | `ee5ff3a1…3d5e1c2f` |\n| EX-004 | Daily-function questionnaire (self-report) | `654c670a…49990f5e` |\n| EX-005 | Old SSA-3288 auth stub | `cd3691cb…26c3a35a` |\n\n## Bottom line (supportability)\n\n| Question | Answer |\n| --- | --- |\n| Are the records strong enough to continue? | **FAIL** — too thin |\n| What should you do? | **NEEDS_RECORDS** — get more medical records |\n| Treating doctor form in …","hiaDay3Expect":"FAIL","paths":{"fixtureDir":"fixtures/case-001-physical-rfc","glance":"fixtures/case-001-physical-rfc/glance.json","supportability":"fixtures/case-001-physical-rfc/supportability.json","plainGapSheet":"fixtures/case-001-physical-rfc/operator-gap-sheet.md"}},{"id":"CASE-002","identity":{"caseId":"CASE-002","brand":"Security in Social","claimType":"SSDI","stage":"hearing","path":"records-only","hearingDate":"2026-12-01","fictionalToday":null,"fiveBusinessDayWindow":null,"requestedOpinions":["physical_RFC","MSS"],"releaseAllowed":false,"attestation":null},"impairments":["lumbar degenerative disc disease (alleged)","chronic low back pain (alleged / assessment impression in notes)"],"sourceNames":["Sample Ortho Clinic","Sample Imaging Center"],"prioritizedFindings":[{"rank":1,"code":"PHYSICAL_RFC_PASS","text":"Physical work limits look supported by dated clinic notes (sample)","severity":"info","citeExhibits":["EX-001","EX-006"],"textRaw":"Physical RFC PASS — dated clinical support across domains; treating MSS present "},{"rank":2,"code":"MSS_PASS","text":"Treating clinic statement form is present (sample). Specialists review the file. Letters are not sold here.","severity":"info","citeExhibits":["EX-006"],"textRaw":"Treating MSS companion PASS (form) — specialists review the file; Letters OUT"},{"rank":3,"code":"RELEASE_LOCKED","text":"Not ready to release. Specialists review the file. Letters are not sold here.","severity":"block","citeExhibits":[],"textRaw":"releaseAllowed=false — specialists review the file; Letters OUT"},{"rank":4,"code":"MER_GAP_PCP","text":"No continuous primary-care records for the last 12 months","severity":"warn","citeExhibits":[],"textRaw":"No continuous PCP MER last 12 months (warn-only)"}],"exhibitInventory":[{"id":"EX-001","filename":"EX-001_treatment_notes_ortho.txt","plainLabel":"EX-001 treatment notes ortho","sourceType":"Clinic visit notes","classOrRole":"treating_notes","date":"2026-07-16","sha256":"d463b76b7c9c8086b4360f44f3b35cd8b23fd9ab5722b5eb11d828e397791ac5","sha256Short":"d463b76b…97791ac5","bytes":5957,"coversDomains":["sit","stand","walk","lift","postural","push_pull","climb_balance","environmental","manipulative"],"ocrStatus":"Complete","verified":false,"ranAt":"2026-09-16T15:35:00-05:00","namedFailCodes":[],"exhibitPath":"fixtures/case-002-physical-rfc/exhibits/EX-001_treatment_notes_ortho.txt"},{"id":"EX-002","filename":"EX-002_mri_lumbar_report.txt","plainLabel":"EX-002 mri lumbar report","sourceType":"Imaging / labs","classOrRole":"imaging_labs","date":"2026-06-28","sha256":"a2eaa2db63fc946cd534b6de57ba9f10519d043aae7fa86b286e3932c6d6890b","sha256Short":"a2eaa2db…c6d6890b","bytes":1430,"coversDomains":[],"ocrStatus":"Complete","verified":false,"ranAt":"2026-09-16T15:35:00-05:00","namedFailCodes":[],"exhibitPath":"fixtures/case-002-physical-rfc/exhibits/EX-002_mri_lumbar_report.txt"},{"id":"EX-003","filename":"EX-003_medication_list.txt","plainLabel":"EX-003 medication list","sourceType":"Medication list","classOrRole":"medications","date":"2026-07-16","sha256":"e8e1d41f082e016cf89b0d6875140f0304155ef51a2ffeae04c26cd1fb00a3e8","sha256Short":"e8e1d41f…fb00a3e8","bytes":1166,"coversDomains":[],"ocrStatus":"Complete","verified":false,"ranAt":"2026-09-16T15:35:00-05:00","namedFailCodes":[],"exhibitPath":"fixtures/case-002-physical-rfc/exhibits/EX-003_medication_list.txt"},{"id":"EX-004","filename":"EX-004_function_questionnaire.txt","plainLabel":"EX-004 function questionnaire","sourceType":"Daily function form","classOrRole":"function_questionnaires","date":"2026-08-05","sha256":"408ef6e7c9a6b22ebedcc227f0290a8a670bedda9b34507a868fb6e9d390ed71","sha256Short":"408ef6e7…d390ed71","bytes":1949,"coversDomains":[],"ocrStatus":"Complete","verified":false,"ranAt":"2026-09-16T15:35:00-05:00","namedFailCodes":[],"exhibitPath":"fixtures/case-002-physical-rfc/exhibits/EX-004_function_questionnaire.txt"},{"id":"EX-005","filename":"EX-005_prior_ssa_3288_auth_stub.txt","plainLabel":"EX-005 prior ssa 3288 auth stub","sourceType":"Prior SSA form","classOrRole":"prior_ssa_forms","date":"2026-05-15","sha256":"a765692ad2ec57229ee91950db8ab06a2a8681903e58b0ca38171491369ad209","sha256Short":"a765692a…369ad209","bytes":982,"coversDomains":[],"ocrStatus":"Complete","verified":false,"ranAt":"2026-09-16T15:35:00-05:00","namedFailCodes":[],"exhibitPath":"fixtures/case-002-physical-rfc/exhibits/EX-005_prior_ssa_3288_auth_stub.txt"},{"id":"EX-006","filename":"EX-006_treating_mss_form.txt","plainLabel":"EX-006 treating mss form","sourceType":"Clinic statement form","classOrRole":"treating_mss","date":"2026-07-16","sha256":"e8684232b916a31a2414a7a2d6fb193a2b9d9439d22bac8637abd47e895f48dc","sha256Short":"e8684232…895f48dc","bytes":3894,"coversDomains":["sit","stand","walk","lift","postural","push_pull","climb_balance","environmental","manipulative"],"ocrStatus":"Complete","verified":false,"ranAt":"2026-09-16T15:35:00-05:00","namedFailCodes":[],"exhibitPath":"fixtures/case-002-physical-rfc/exhibits/EX-006_treating_mss_form.txt"}],"gap":{"reportPath":"fixtures/case-002-physical-rfc/gap-report.md","operatorSheetPath":"fixtures/case-002-physical-rfc/operator-gap-sheet.md","gapFlags":null,"missingMer":null,"informedNotSubmitted":null},"supportability":{"path":"fixtures/case-002-physical-rfc/supportability.json","physical_RFC":"PASS","MSS":"PASS","mental_MRFC":null,"fail_domains":[],"needs_records_domains":[],"releaseAllowed":false,"attestation":null,"statusEnum":"PASS|FAIL|NEEDS_RECORDS"},"audit":{"releaseAllowed":false,"attestation":null,"humanConfirmGate":"Specialists review the file. Letters OUT. Not ready to release.","ocrCompleteNotVerified":true,"reconciledAt":"2026-09-15T16:42:00Z","packetOwnerScreens":["A_exhibit_inventory","C_gap_supportability","F_audit"],"letters":"OUT","sampleOnly":true,"immutableHashList":["d463b76b7c9c8086b4360f44f3b35cd8b23fd9ab5722b5eb11d828e397791ac5","a2eaa2db63fc946cd534b6de57ba9f10519d043aae7fa86b286e3932c6d6890b","e8e1d41f082e016cf89b0d6875140f0304155ef51a2ffeae04c26cd1fb00a3e8","408ef6e7c9a6b22ebedcc227f0290a8a670bedda9b34507a868fb6e9d390ed71","a765692ad2ec57229ee91950db8ab06a2a8681903e58b0ca38171491369ad209","e8684232b916a31a2414a7a2d6fb193a2b9d9439d22bac8637abd47e895f48dc"],"packetReadyStamp":null},"watermark":"Not real claimant data","humanConfirmGate":"Specialists review the file. Letters OUT. Not ready to release.","gapReportPreview":"# Your record-review checklist — CASE-002 \n\n**What this is:** A plain checklist of what records you uploaded and what’s missing.  \n**Not a doctor letter.** We do **not** write MSS/RFC/MRFC letters in this review.  \n**Brand:** Security in Social · **For:** DIY Social Security record review  \n**Watermark:** / fake data only — not a real person  \n**Can we release anything?** **No** (`releaseAllowed=false`) — specialists review the file. Letters OUT. Not ready to release.\n\n**Demo clock:** min **10–18** · say: “File looks complete for review — specialists review the file. Letters OUT.”\n\n---\n\n## Your uploaded files (hashed)\n\n| ID | What it is | Short hash |\n| --- | --- | --- |\n| EX-001 | EX-001 treatment notes ortho.txt | `d463b76b…97791ac5` |\n| EX-002 | EX-002 mri lumbar report.txt | `a2eaa2db…c6d6890b` |\n| EX-003 | EX-003 medication list.txt | `e8e1d41f…fb00a3e8` |\n| EX-004 | EX-004 function questionnaire.txt | `408ef6e7…d390ed71` |\n| EX-005 | EX-005 prior ssa 3288 auth stub.txt | `a765692a…369ad209` |\n| EX-006 | EX-006 treating mss form.txt | `e8684232…895f48dc` |\n\n## Bottom line (supportability)\n\n| Question | Answer |\n| --- | --- |\n| Are the records strong enough to continue? | **PASS** —…","hiaDay3Expect":"PASS","paths":{"fixtureDir":"fixtures/case-002-physical-rfc","glance":"fixtures/case-002-physical-rfc/glance.json","supportability":"fixtures/case-002-physical-rfc/supportability.json","plainGapSheet":"fixtures/case-002-physical-rfc/operator-gap-sheet.md"}},{"id":"CASE-006","identity":{"caseId":"CASE-006","brand":"Security in Social","claimType":"SSDI","stage":"hearing","path":"records-only","hearingDate":"2026-09-29","fictionalToday":"2026-09-15","fiveBusinessDayWindow":true,"requestedOpinions":["physical_RFC","MSS"],"releaseAllowed":false,"attestation":null},"impairments":["lumbar degenerative disc disease (alleged / sample)","chronic low back pain (alleged / sample)"],"sourceNames":["Sample Packet-Gap Ortho Clinic","Dr. Sample H. Lumbar, MD (FICTIONAL)","Sample Imaging Center","Sample Spine Specialist (informed, notes not submitted)"],"prioritizedFindings":[{"rank":1,"code":"HALLEX_5BD_RISK","text":"Hearing is close. Evidence deadline risk if records are late","severity":"block","citeExhibits":[],"textRaw":"Inside/near 5-business-day evidence window — packet-gap risk"},{"rank":2,"code":"MISSING_MER","text":"Continuous primary-care records for the last 12 months are missing","severity":"block","citeExhibits":[],"textRaw":"Continuous PCP MER last 12 months missing"},{"rank":3,"code":"INFORMED_NOT_SUBMITTED","text":"Known records were never turned in (spine notes, clinic statement, daily-function form, work history)","severity":"block","citeExhibits":[],"textRaw":"Informed ≥5BD exhibits not submitted (spine notes, MSS, ADL, vocational)"},{"rank":4,"code":"DILIGENCE_STUB","text":"Diligence note is only a placeholder, not signed off yet","severity":"warn","citeExhibits":[],"textRaw":"Diligence stub present — stub_not_attested (flag only)"},{"rank":5,"code":"RFC_MSS_NEEDS_RECORDS","text":"Physical limits and clinic statement both need more records. Thin intentional packet","severity":"block","citeExhibits":["EX-001"],"textRaw":"Physical RFC + MSS NEEDS_RECORDS — thin intentional packet"}],"exhibitInventory":[{"id":"EX-001","filename":"EX-001_treatment_notes_ortho.txt","plainLabel":"EX-001 treatment notes ortho","sourceType":"Clinic visit notes","classOrRole":"treating_notes","date":"2026-04-09","sha256":"e3ddf1674130ffb3d7a8411f5b5b4baa99e88c8e74359223cb4ba233786edf48","sha256Short":"e3ddf167…786edf48","bytes":3897,"coversDomains":["sit","stand","walk","lift","postural"],"ocrStatus":"Complete","verified":false,"ranAt":"2026-09-16T15:35:00-05:00","namedFailCodes":[],"exhibitPath":"fixtures/case-006-hallex-packet-gap/exhibits/EX-001_treatment_notes_ortho.txt"},{"id":"EX-002","filename":"EX-002_mri_lumbar_report.txt","plainLabel":"EX-002 mri lumbar report","sourceType":"Imaging / labs","classOrRole":"imaging_labs","date":"2026-03-28","sha256":"15ed136920aa6a41a7539c860783ad6754828f1c6ebc3fc7406d251609e83a33","sha256Short":"15ed1369…09e83a33","bytes":1470,"coversDomains":[],"ocrStatus":"Complete","verified":false,"ranAt":"2026-09-16T15:35:00-05:00","namedFailCodes":[],"exhibitPath":"fixtures/case-006-hallex-packet-gap/exhibits/EX-002_mri_lumbar_report.txt"},{"id":"EX-003","filename":"EX-003_medication_list.txt","plainLabel":"EX-003 medication list","sourceType":"Medication list","classOrRole":"medications","date":"2026-04-09","sha256":"5271ac4725a00c477f147e0b1d7c05eb39c30256ad1aa72cb2e5635bd9691814","sha256Short":"5271ac47…d9691814","bytes":1211,"coversDomains":[],"ocrStatus":"Complete","verified":false,"ranAt":"2026-09-16T15:35:00-05:00","namedFailCodes":[],"exhibitPath":"fixtures/case-006-hallex-packet-gap/exhibits/EX-003_medication_list.txt"},{"id":"EX-004","filename":"EX-004_prior_ssa_3288_auth_stub.txt","plainLabel":"EX-004 prior ssa 3288 auth stub","sourceType":"Prior SSA form","classOrRole":"prior_ssa_forms","date":"2026-06-12","sha256":"b363a2db3aa5c60be826d3db824b0ccf46018f7ef65d1fd7510e8b14444facb0","sha256Short":"b363a2db…444facb0","bytes":1096,"coversDomains":[],"ocrStatus":"Complete","verified":false,"ranAt":"2026-09-16T15:35:00-05:00","namedFailCodes":[],"exhibitPath":"fixtures/case-006-hallex-packet-gap/exhibits/EX-004_prior_ssa_3288_auth_stub.txt"}],"gap":{"reportPath":"fixtures/case-006-hallex-packet-gap/gap-report.md","operatorSheetPath":"fixtures/case-006-hallex-packet-gap/operator-gap-sheet.md","gapFlags":{"missingMer":true,"informedNotSubmitted":true,"fiveBusinessDayRisk":true,"informedGe5bdNotSubmitted":true,"neitherInformedNorSubmittedRisk":false},"missingMer":["Continuous primary-care records for the last 12 months"],"informedNotSubmitted":["Recent Sample Spine Specialist visit notes (~2026-08). Firm informed exist, not uploaded","Clinic statement form. Clinic said they would complete it; not uploaded","Daily function form, not uploaded","Work-history evidence, not uploaded"]},"supportability":{"path":"fixtures/case-006-hallex-packet-gap/supportability.json","physical_RFC":"NEEDS_RECORDS","MSS":"NEEDS_RECORDS","mental_MRFC":null,"fail_domains":[],"needs_records_domains":[],"releaseAllowed":false,"attestation":null,"statusEnum":"PASS|FAIL|NEEDS_RECORDS"},"audit":{"releaseAllowed":false,"attestation":null,"humanConfirmGate":"Specialists review the file. Letters OUT. Not ready to release.","ocrCompleteNotVerified":true,"reconciledAt":"2026-09-15T18:15:00Z","packetOwnerScreens":["A_exhibit_inventory","C_gap_supportability","F_audit"],"letters":"OUT","sampleOnly":true,"immutableHashList":["e3ddf1674130ffb3d7a8411f5b5b4baa99e88c8e74359223cb4ba233786edf48","15ed136920aa6a41a7539c860783ad6754828f1c6ebc3fc7406d251609e83a33","5271ac4725a00c477f147e0b1d7c05eb39c30256ad1aa72cb2e5635bd9691814","b363a2db3aa5c60be826d3db824b0ccf46018f7ef65d1fd7510e8b14444facb0"],"packetReadyStamp":null},"watermark":"Not real claimant data","humanConfirmGate":"Specialists review the file. Letters OUT. Not ready to release.","gapReportPreview":"# Your record-review checklist — CASE-006 \n\n**What this is:** A plain checklist of what records you uploaded and what’s missing.  \n**Not a doctor letter.** We do **not** write MSS/RFC/MRFC letters in this review.  \n**Brand:** Security in Social · **For:** DIY Social Security record review  \n**Watermark:** / fake data only — not a real person  \n**Hearing (sample):** 2026-09-29 · **Today (sample):** 2026-09-15 · **Inside ~5 business-day window:** yes — risk  \n**Can we release anything?** **No**\n\n**Demo clock:** min **18–25** · say: “Hearing-clock gap — missing and informed-not-sent records; still no pass.”\n\n---\n\n## Your uploaded files (hashed) — thin on purpose\n\n| ID | What it is | Short hash |\n| --- | --- | --- |\n| EX-001 | Older ortho notes (partial; no doctor form) | `e3ddf167…786edf48` |\n| EX-002 | Lumbar MRI report | `15ed1369…09e83a33` |\n| EX-003 | Medication list | `5271ac47…d9691814` |\n| EX-004 | Old SSA-3288 auth stub | `b363a2db…444facb0` |\n\n## Bottom line (supportability)\n\n| Question | Answer |\n| --- | --- |\n| Are the records strong enough to continue? | **NEEDS_RECORDS** |\n| Treating clinic statement form in the file? | **NEEDS_RECORDS** — not submitted |\n| Dilige…","hiaDay3Expect":"NEEDS_RECORDS","paths":{"fixtureDir":"fixtures/case-006-hallex-packet-gap","glance":"fixtures/case-006-hallex-packet-gap/glance.json","supportability":"fixtures/case-006-hallex-packet-gap/supportability.json","plainGapSheet":"fixtures/case-006-hallex-packet-gap/operator-gap-sheet.md"}}]};
+const ZDR_KEY='sis-zdr-exhibits-v1';
+const CONFIRM_KEY='sis-packet-confirm-v1';
+const FORGE_PACKET_KEY='sis-care-packet-brief-v1';
+const PORTAL_PACKET_KEY='sis-portal-packet-context-v1';
+const PACKET_BRIEF_MAX=6000;
+const EXTRACT_CLIP=900;
+const UPLOAD_CASE_ID='UPLOAD';
+const MAX=8*1024*1024;
+const STEPS=[
+  {id:'upload',n:1,label:'Upload'},
+  {id:'glance',n:2,label:'Glance'},
+  {id:'gaps',n:3,label:'Gaps'},
+  {id:'packet',n:4,label:'Ready'}
+];
+const STEP_PLAIN=Object.fromEntries(STEPS.map(s=>[s.id,s.label]));
+STEP_PLAIN.inventory='Pages';
+const PLAIN_BY_CODE={"PHYSICAL_RFC_FAIL":"Physical work limits are not supported yet. Environment and hand-use areas lack dated clinic notes","MSS_NEEDS_RECORDS":"No treating clinic statement form is in the packet yet","MER_GAP_PCP":"No continuous primary-care records for the last 12 months","VOCATIONAL_MISSING":"No work-history evidence is in the packet","PHYSICAL_RFC_PASS":"Physical work limits look supported by dated clinic notes (sample)","MSS_PASS":"Treating clinic statement form is present (sample). Specialists review the file. Letters are not sold here.","RELEASE_LOCKED":"Not ready to release. Specialists review the file. Letters are not sold here.","HALLEX_5BD_RISK":"Hearing is close. Evidence deadline risk if records are late","MISSING_MER":"Continuous primary-care records for the last 12 months are missing","INFORMED_NOT_SUBMITTED":"Known records were never turned in (spine notes, clinic statement, daily-function form, work history)","DILIGENCE_STUB":"Diligence note is only a placeholder, not signed off yet","RFC_MSS_NEEDS_RECORDS":"Physical limits and the clinic statement both need more records. Thin intentional packet"};
+const MONTHS=['January','February','March','April','May','June','July','August','September','October','November','December'];
+const GAP_COPY={
+  PHYSICAL_RFC_FAIL:{plain:'Physical work limits are not supported yet.',why:'The clinic notes we have do not say enough about work, standing, or hand use.',uploadAsk:'Upload clinic notes that say how long you can stand, walk, lift, and use your hands.'},
+  MSS_NEEDS_RECORDS:{plain:'No treating clinic statement form is in the packet yet.',why:'Specialists cannot review a clinic statement that is not in the file.',uploadAsk:'Ask your treating clinic for a clinic statement form and upload it.'},
+  MER_GAP_PCP:{plain:'No continuous primary-care records for the last 12 months.',why:'A year of primary-care notes is missing.',uploadAsk:'Upload primary-care notes from the last 12 months.'},
+  VOCATIONAL_MISSING:{plain:'No work-history evidence is in the packet.',why:'We cannot see your past jobs from this file.',uploadAsk:'Upload a work-history page or a list of past jobs.'},
+  PHYSICAL_RFC_PASS:{plain:'Physical work limits look supported by dated clinic notes (sample).',why:'',uploadAsk:''},
+  MSS_PASS:{plain:'A treating clinic statement form is in this packet.',why:'',uploadAsk:''},
+  RELEASE_LOCKED:{plain:'Not ready to release. Specialists review the file. Letters are not sold here.',why:'The file is not honest enough to stand yet.',uploadAsk:'Fix the gaps first.'},
+  HALLEX_5BD_RISK:{plain:'Hearing is close. Evidence deadline risk if records are late.',why:'Missing pages may not make it in before the hearing window.',uploadAsk:'Gather the missing records now.'},
+  MISSING_MER:{plain:'Continuous primary-care records for the last 12 months are missing.',why:'A year of primary-care notes is missing.',uploadAsk:'Upload primary-care notes from the last 12 months.'},
+  INFORMED_NOT_SUBMITTED:{plain:'Known records were never turned in (spine notes, clinic statement, daily-function form, work history).',why:'The clinic told us these pages exist. They are not in this file.',uploadAsk:'Upload the spine notes, clinic statement form, daily function form, and work history.'},
+  DILIGENCE_STUB:{plain:'Diligence note is only a placeholder, not signed off yet.',why:'That note is not finished.',uploadAsk:'We will not treat a placeholder as a finished record.'},
+  RFC_MSS_NEEDS_RECORDS:{plain:'Physical limits and the clinic statement both need more records. Thin intentional packet.',why:'The pages in this file are not enough to continue.',uploadAsk:'Upload fuller clinic notes and a treating clinic statement form.'}
+};
+let active=0;
+let step='upload';
+function esc(s){return String(s??'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/"/g,'&quot;');}
+function caseOf(){return MODEL.cases[active];}
+function zdrLoad(){try{return JSON.parse(sessionStorage.getItem(ZDR_KEY)||'[]');}catch(e){return [];}}
+function zdrSave(arr){sessionStorage.setItem(ZDR_KEY,JSON.stringify(arr));}
+function confirmLoad(){try{return JSON.parse(sessionStorage.getItem(CONFIRM_KEY)||'{}');}catch(e){return {};}}
+function confirmSave(obj){sessionStorage.setItem(CONFIRM_KEY,JSON.stringify(obj));}
+function shortHash(h){h=String(h||'');return h.length>16?h.slice(0,8)+'…'+h.slice(-8):h;}
+function plainStatusLabel(r){if(r==='FAIL')return'Not supported yet';if(r==='PASS')return'Looks supported';if(r==='NEEDS_RECORDS')return'Needs more records';return'n/a';}
+function statusChip(r){
+  if(r==='FAIL')return'<span class="tag fail">FAIL</span> <span class="plain">Not supported yet</span>';
+  if(r==='PASS')return'<span class="tag pass">PASS</span> <span class="plain">Looks supported</span>';
+  if(r==='NEEDS_RECORDS')return'<span class="tag gap">NEEDS_RECORDS</span> <span class="plain">Needs more records</span>';
+  return'<span class="tag locked">n/a</span>';
+}
+function sev(s){const m={block:'Needs attention',warn:'Watch',info:'Note'};return '<span class="tag '+(s==='block'?'block':s==='warn'?'warn':'info')+'">'+(m[s]||esc(s))+'</span>';}
+function list(arr){if(!arr||!arr.length)return'<p class="sub">None listed</p>';return '<ul>'+arr.map(x=>'<li>'+esc(x)+'</li>').join('')+'</ul>';}
+function domainRows(s){const d=(s&&s.physical_RFC_domains)||{};const k=Object.keys(d);if(!k.length)return'<tr><td colspan="2">See status chips above</td></tr>';
+  const label={standing_walking:'Standing / walking',sitting:'Sitting',lifting_carrying:'Lifting / carrying',postural_bend_stoop_crouch:'Bending / stooping',push_pull:'Pushing / pulling',climb_balance:'Climbing / balance',environmental:'Environment limits',manipulative_reaching_handling:'Reaching / handling'};
+  return k.map(x=>'<tr><td>'+(label[x]||esc(x))+'</td><td>'+statusChip(d[x])+'</td></tr>').join('');}
+function gapFlags(g){const f=(g&&g.gapFlags)||{};const k=Object.keys(f);if(!k.length)return'<p class="sub">No special timing flags on this sample case.</p>';
+  const lab={missingMer:'Missing medical records',informedNotSubmitted:'Told about records that were not turned in',fiveBusinessDayRisk:'Close to hearing deadline',informedGe5bdNotSubmitted:'Known records still missing near hearing',neitherInformedNorSubmittedRisk:'Neither informed nor submitted'};
+  return '<table><tr><th>Issue</th><th>Yes/No</th></tr>'+k.map(x=>'<tr><td>'+(lab[x]||esc(x))+'</td><td>'+(f[x]?'Yes':'No')+'</td></tr>').join('')+'</table>';}
+function ocrCell(e){
+  if(e.verified===true)return'Checked';
+  if(e.ocrStatus==='Complete'&&e.verified===false)return'Complete · not checked';
+  if(e.extractState==='Extracted')return'Extracted · not checked';
+  return esc(e.ocrStatus||'n/a');
+}
+function writeHash(){
+  const c=caseOf();
+  const loc=location.pathname+(location.search||'');
+  history.replaceState(null,'',loc+'#'+c.id+'/'+step);
+}
+function parseHash(){
+  const h=(location.hash||'').replace(/^#/,'');
+  if(!h)return;
+  const parts=h.split('/');
+  const id=parts[0];
+  const st=parts[1];
+  const i=MODEL.cases.findIndex(c=>c.id===id);
+  if(i>=0)active=i;
+  if(st&&(STEPS.some(s=>s.id===st)||st==='inventory'))step=st;
+}
+function glanceLine(c){
+  const s=c.supportability||{}, id=c.identity||{};
+  let line=c.id+' is a records-only review. Physical limits: '+plainStatusLabel(s.physical_RFC)+'. Clinic statement: '+plainStatusLabel(s.MSS)+'.';
+  if(id.fiveBusinessDayWindow) line+=' Hearing is close. Act soon.';
+  line+=' Extracted is not the same as verified. Nothing here is approved to send.';
+  return line;
+}
+function scrubProseDash(s){
+  s=String(s??'');
+  s=s.replace(/\s+[—]\s+/g,'. ');
+  s=s.replace(/\s+[–]\s+/g,', ');
+  s=s.replace(/\. ([a-z])/g,function(_,c){return '. '+c.toUpperCase();});
+  s=s.replace(/[—]/g,', ');
+  return s.replace(/ {2,}/g,' ').trim();
+}
+function findingText(f){return scrubProseDash(PLAIN_BY_CODE[f.code]||f.text||'');}
+function gapHighlights(c){
+  const g=c.gap||{}, id=c.identity||{}, f=g.gapFlags||{};
+  const out=[];
+  if(f.missingMer) out.push('Missing medical records');
+  if(f.informedNotSubmitted) out.push('Told about records that were not turned in');
+  if(f.fiveBusinessDayRisk||id.fiveBusinessDayWindow) out.push('Hearing is close. Evidence deadline risk');
+  if(f.informedGe5bdNotSubmitted) out.push('Known records still missing near hearing');
+  if(Array.isArray(g.missingMer)) g.missingMer.forEach(x=>{ if(x&&out.indexOf(x)<0) out.push(x); });
+  if(Array.isArray(g.informedNotSubmitted)) g.informedNotSubmitted.forEach(x=>{ if(x&&out.length<8) out.push(x); });
+  return out;
+}
+function oneLineBrief(c){
+  const s=c.supportability||{}, id=c.identity||{};
+  function physPhrase(r){
+    if(r==='FAIL') return 'are not supported yet';
+    if(r==='PASS') return 'look supported';
+    if(r==='NEEDS_RECORDS') return 'need more records';
+    return 'are still under review';
+  }
+  function mssPhrase(r){
+    if(r==='FAIL') return 'the clinic statement is not supported yet';
+    if(r==='PASS') return 'the clinic statement looks supported';
+    if(r==='NEEDS_RECORDS') return 'the clinic statement still needs records';
+    return 'the clinic statement is still under review';
+  }
+  let line='You’re on '+c.id+'. Physical limits '+physPhrase(s.physical_RFC)+'; '+mssPhrase(s.MSS)+'.';
+  if(id.fiveBusinessDayWindow) line+=' Hearing is close. Act soon.';
+  else if(s.physical_RFC==='PASS'&&s.MSS==='PASS') line+=' Specialists review the file. Letters are not sold here. Not ready to release.';
+  return line;
+}
+const FLAG_LABELS={missingMer:'Missing medical records',informedNotSubmitted:'Told about records that were not turned in',fiveBusinessDayRisk:'Close to hearing deadline',informedGe5bdNotSubmitted:'Known records still missing near hearing',neitherInformedNorSubmittedRisk:'Neither informed nor submitted'};
+function clipBrief(s,n){
+  const t=String(s??'');
+  if(!n||t.length<=n) return t;
+  return t.slice(0,n-1)+'…';
+}
+function worstStatus(a,b){
+  const rank={FAIL:3,NEEDS_RECORDS:2,PASS:1};
+  const ra=rank[a]||0, rb=rank[b]||0;
+  if(ra===0&&rb===0) return 'NEEDS_RECORDS';
+  return ra>=rb?a:b;
+}
+function supportStatusOf(c){
+  const expect=c.hiaDay3Expect;
+  if(expect==='PASS'||expect==='FAIL'||expect==='NEEDS_RECORDS') return expect;
+  const s=c.supportability||{};
+  return worstStatus(s.physical_RFC,s.MSS);
+}
+function gapsStatusOf(c){
+  const g=c.gap||{}, f=g.gapFlags||{};
+  if((g.missingMer&&g.missingMer.length)||(g.informedNotSubmitted&&g.informedNotSubmitted.length)||f.missingMer||f.informedNotSubmitted||f.fiveBusinessDayRisk||f.informedGe5bdNotSubmitted) return 'NEEDS_RECORDS';
+  const findings=c.prioritizedFindings||[];
+  if(findings.some(x=>/FAIL/.test(x.code||''))) return 'FAIL';
+  if(findings.some(x=>x.severity==='block'&&x.code!=='RELEASE_LOCKED')) return 'NEEDS_RECORDS';
+  return 'PASS';
+}
+function exhibitName(e){return e.name||e.plainLabel||e.filename||e.id||'';}
+function exhibitChecked(e){
+  if(e.verified===true) return 'checked';
+  if(e.ocrStatus==='Complete'&&e.verified===false) return 'Complete, not checked';
+  if(e.extractState==='Extracted') return 'Extracted, not checked';
+  return e.ocrStatus||'unknown';
+}
+function topGapsOf(c){
+  return topGapRowsOf(c).map(function(g){ return g.plain; });
+}
+function composePacketGaps(c){
+  const parts=topGapsOf(c);
+  return parts.length?parts.join('\n'):'No extra gap list on this sample (see glance findings).';
+}
+function composePacketBrief(c){
+  const id=c.identity||{};
+  const s=c.supportability||{};
+  const g=c.gap||{};
+  const lines=[];
+  lines.push('Packet brief for '+c.id+'. Not a real person. Letters OUT. Not approved to send to a claimant.');
+  lines.push('');
+  lines.push('Identity: '+(id.brand||'Security in Social')+' · '+(id.caseId||c.id)+' · '+(id.claimType||'')+' · '+(id.stage||'')+' · '+(id.path==='records-only'?'records review only':(id.path||''))+'. Hearing date '+(id.hearingDate||'n/a')+'.');
+  if(id.fictionalToday) lines.push('Sample “today”: '+id.fictionalToday+'.');
+  if(id.fiveBusinessDayWindow) lines.push('Close to hearing. Evidence deadline risk if records are late.');
+  lines.push(c.watermark||'Not real claimant data');
+  lines.push('');
+  lines.push('Glance: '+glanceLine(c));
+  const impairments=c.impairments||[];
+  if(impairments.length) lines.push('Conditions claimed (sample labels): '+impairments.join('; ')+'.');
+  const sources=(c.sourceNames||[]).map(function(n){ return scrubMdDo(n).replace(/\s*\([^)]*\)/g,'').trim(); }).filter(Boolean);
+  if(sources.length) lines.push('Record sources: '+sources.join('; ')+'.');
+  lines.push('');
+  const board=buildReviewBoard(c);
+  lines.push('Board: '+board.supportStatus+'. We can see pages in this file. Specialists review the file. Letters OUT. Not ready to release.');
+  const shows=board.fileShows||[];
+  if(shows.length) lines.push('What the file shows: '+formatCiteMiddotList(shows)+'.');
+  const miss=board.stillMissing;
+  if(miss&&miss.plain){
+    lines.push('Still missing: '+miss.plain+(miss.note?'. '+miss.note:''));
+    if(miss.uploadAsk) lines.push('Gather: '+miss.uploadAsk);
+  } else {
+    const top=primaryGapOf(board);
+    if(top){
+      lines.push('Primary gap: '+top.plain+' ('+formatCiteListWithSecondary(top.cites)+')');
+      if(top.uploadAsk) lines.push('Gather: '+top.uploadAsk);
+    }
+  }
+  lines.push('Ready to review is not approved. Extracted is not verified. Letters OUT.');
+  const onFile=onFileCiteLine(board);
+  if(onFile&&onFile!=='Not in this packet') lines.push('On file: '+onFile+'.');
+  if(board.topGaps.length){
+    lines.push('');
+    lines.push('More gaps:');
+    board.topGaps.forEach(function(g,i){
+      lines.push((i+1)+'. '+g.plain+' ('+formatCiteListWithSecondary(g.cites)+')');
+    });
+  }
+  if(board.supported.length){
+    lines.push('');
+    lines.push('Supported:');
+    board.supported.forEach(function(row,i){
+      lines.push((i+1)+'. '+row.plain+' ('+formatCiteListWithSecondary(row.cites)+')');
+    });
+  }
+  lines.push('');
+  lines.push('Supportability: Physical limits '+plainStatusLabel(s.physical_RFC)+'. Clinic statement '+plainStatusLabel(s.MSS)+'. Board: '+board.supportStatus+'. Specialists review the file. Still locked. releaseAllowed=false. Letters OUT.');
+  const flags=g.gapFlags||{};
+  const flagKeys=Object.keys(flags);
+  if(flagKeys.length){
+    lines.push('Timing and gaps: '+flagKeys.map(function(k){ return (FLAG_LABELS[k]||k)+': '+(flags[k]?'yes':'no'); }).join('; ')+'.');
+  }
+  if(g.missingMer&&g.missingMer.length) lines.push('Missing records: '+g.missingMer.join('; ')+'.');
+  if(g.informedNotSubmitted&&g.informedNotSubmitted.length) lines.push('Known about but not in the packet: '+g.informedNotSubmitted.join('; ')+'.');
+  lines.push('');
+  lines.push('Exhibits in the packet (everyday name, source, date lead; EX code secondary):');
+  (c.exhibitInventory||[]).forEach(function(e){
+    const hash=e.sha256Short||shortHash(e.sha256);
+    const cite=citeFromExhibit(c,e);
+    lines.push('- '+formatCiteListWithSecondary(cite?[cite]:[])+' · '+hash+' · '+exhibitChecked(e));
+  });
+  lines.push('');
+  lines.push('Do not invent extra records. Do not write letters. OCR complete is not verified. This brief is synthesized desk text.');
+  return clipBrief(lines.join('\n'), PACKET_BRIEF_MAX);
+}
+function zdrPages(){
+  return zdrLoad().filter(function(e){ return !!(e && (e.name||e.extractedText||e.id)); });
+}
+function clipExtract(text,n){
+  const t=String(text??'').replace(/\s+/g,' ').trim();
+  if(!t) return '(no extract text)';
+  return clipBrief(t, n||EXTRACT_CLIP);
+}
+function uploadGlance(pages){
+  const n=pages.length;
+  const names=pages.map(function(e){ return e.name||e.id; }).filter(Boolean).join(', ');
+  return UPLOAD_CASE_ID+' has '+n+' uploaded page'+(n===1?'':'s')+' on this device'+(names?': '+names:'')+'. Specialists review the file. Extracted is not verified. Letters OUT. Not ready to release.';
+}
+function composeUploadPacketBrief(pages){
+  const lines=[];
+  lines.push('On-device upload packet. This browser tab only. Not a CASE-00x fixture. Letters OUT. releaseAllowed=false. Extracted is not verified. Specialists review the file. Not ready to release.');
+  lines.push('');
+  lines.push('Identity: Security in Social · '+UPLOAD_CASE_ID+' · records review only. Pages saved on this device (ZDR). No invented diagnoses. No doctor credentials.');
+  lines.push('');
+  lines.push('Glance: '+uploadGlance(pages));
+  const board=buildUploadReviewBoard(pages);
+  if(pages.length){
+    lines.push('Board: '+board.supportStatus+'. We can see pages in this file. Specialists review the file. Letters OUT. Not ready to release.');
+    const shows=board.fileShows||[];
+    if(shows.length) lines.push('What the file shows: '+formatCiteMiddotList(shows)+'.');
+    const miss=board.stillMissing;
+    if(miss&&miss.plain){
+      lines.push('Still missing: '+miss.plain+(miss.note?'. '+miss.note:''));
+      if(miss.uploadAsk) lines.push('Gather: '+miss.uploadAsk);
+    }
+    lines.push('Ready to review is not approved. Extracted is not verified. Letters OUT.');
+    const onFile=onFileCiteLine(board);
+    if(onFile&&onFile!=='Not in this packet') lines.push('On file: '+onFile+'.');
+  } else {
+    lines.push('Board: Still reading. Pages not visible yet. We cannot see your file yet. Do not invent EX codes or findings.');
+    lines.push('Ready to review is not approved. Extracted is not verified. Letters OUT.');
+  }
+  lines.push('');
+  lines.push('Uploaded files (filename + clipped extract):');
+  pages.forEach(function(e,i){
+    const name=e.name||e.id||('file-'+(i+1));
+    const hash=shortHash(e.sha256);
+    const stub=e.fail_code?' · '+e.fail_code:'';
+    lines.push('');
+    lines.push((i+1)+'. '+name+' ('+(e.id||'')+(e.bytes!=null?' · '+e.bytes+' bytes':'')+' · '+hash+stub+')');
+    lines.push('Extract: '+clipExtract(e.extractedText, EXTRACT_CLIP));
+  });
+  lines.push('');
+  lines.push('Support: pages on this device, under specialists review. Not a FAIL stamp. Do not invent extra records. Do not write letters.');
+  return clipBrief(lines.join('\n'), PACKET_BRIEF_MAX);
+}
+function boardToPacketGaps(board){
+  const miss=board&&board.stillMissing;
+  if(miss&&miss.plain){
+    const lines=[miss.plain];
+    if(miss.note) lines.push(miss.note);
+    if(miss.uploadAsk) lines.push('Gather: '+miss.uploadAsk);
+    return lines.join('\n');
+  }
+  const top=primaryGapOf(board);
+  if(!top) return 'No extra gap list on this sample (see glance findings).';
+  const lines=[top.plain+' ('+formatCiteListWithSecondary(top.cites)+')'];
+  if(top.uploadAsk) lines.push('Gather: '+top.uploadAsk);
+  return lines.join('\n');
+}
+function buildSampleCarePacket(){
+  const c=caseOf(), inv=c.exhibitInventory||[];
+  const board=buildReviewBoard(c);
+  const supportStatus=honestSupportEnum(c,board);
+  const gapsStatus=supportStatus==='PASS'?gapsStatusOf(c):supportStatus;
+  const packetBrief=composePacketBrief(c);
+  const glance=glanceLine(c);
+  const exhibitLabels=exhibitCiteLabels(c);
+  return {
+    has_packet:true,
+    caseId:c.id,
+    case_id:c.id,
+    packet_brief:packetBrief,
+    glance_summary:glance,
+    packet_gaps:boardToPacketGaps(board),
+    supportabilityNotes:talkOpenerLine(board),
+    supportStatus:supportStatus,
+    support_status:supportStatus,
+    supportStatusPlain:board.supportStatus,
+    topGaps:board.topGaps,
+    gapsStatus:gapsStatus,
+    gaps_status:gapsStatus,
+    exhibitLabels:exhibitLabels,
+    exhibitCites:(inv||[]).map(function(e){ return citeFromExhibit(c,e); }).filter(Boolean),
+    exhibitCount:inv.length,
+    board:board,
+    readyFace:{
+      h1:'Not ready to release.',
+      fileShows:board.fileShows||[],
+      stillMissing:board.stillMissing||null,
+      extractedNotVerified:true,
+      readyToReviewIsNotApproved:true
+    },
+    step:STEP_PLAIN[step]||step,
+    letters:'OUT',
+    sample:true,
+    releaseAllowed:false
+  };
+}
+function buildUploadCarePacket(pages){
+  const board=buildUploadReviewBoard(pages);
+  const labels=pages.map(function(e){ return e.name||e.id; }).filter(Boolean);
+  const supportStatus='NEEDS_RECORDS';
+  const gapsStatus='NEEDS_RECORDS';
+  const glance=uploadGlance(pages);
+  const packetBrief=composeUploadPacketBrief(pages);
+  return {
+    has_packet:true,
+    caseId:UPLOAD_CASE_ID,
+    case_id:UPLOAD_CASE_ID,
+    packet_brief:packetBrief,
+    glance_summary:glance,
+    packet_gaps:boardToPacketGaps(board),
+    supportabilityNotes:talkOpenerLine(board),
+    supportStatus:supportStatus,
+    support_status:supportStatus,
+    supportStatusPlain:board.supportStatus,
+    topGaps:board.topGaps,
+    gapsStatus:gapsStatus,
+    gaps_status:gapsStatus,
+    exhibitLabels:labels,
+    exhibitCites:board.supported[0]?board.supported[0].cites:[],
+    exhibitCount:pages.length,
+    board:board,
+    readyFace:{
+      h1:'Not ready to release.',
+      fileShows:board.fileShows||[],
+      stillMissing:board.stillMissing||null,
+      extractedNotVerified:true,
+      readyToReviewIsNotApproved:true
+    },
+    step:STEP_PLAIN[step]||step,
+    letters:'OUT',
+    sample:false,
+    releaseAllowed:false
+  };
+}
+function buildCarePacket(){
+  const pages=zdrPages();
+  if(pages.length) return buildUploadCarePacket(pages);
+  return buildSampleCarePacket();
+}
+function packetCaseId(payload){
+  return (payload&&(payload.case_id||payload.caseId))||caseOf().id;
+}
+function talkHref(caseId){return '/care-talk/?case='+encodeURIComponent(caseId);}
+function storePacketContext(){
+  const payload=buildCarePacket();
+  const json=JSON.stringify(payload);
+  try{
+    sessionStorage.setItem(FORGE_PACKET_KEY,json);
+    sessionStorage.setItem(PORTAL_PACKET_KEY,json);
+  }catch(e){}
+  return payload;
+}
+function bindTalk(){
+  const a=document.getElementById('talkCare');
+  if(!a) return;
+  const id=packetCaseId(buildCarePacket());
+  a.href=talkHref(id);
+  a.onclick=function(ev){
+    const payload=storePacketContext();
+    const go=packetCaseId(payload);
+    if(ev.metaKey||ev.ctrlKey||ev.shiftKey||ev.altKey||ev.button!==0) return;
+    ev.preventDefault();
+    location.href=talkHref(go);
+  };
+}
+function staffMode(){
+  try{ return new URLSearchParams(location.search).get('staff')==='1'; }catch(e){ return false; }
+}
+function staffDockEl(){
+  if(!staffMode()){
+    const extra=document.querySelector('details.dock');
+    if(extra) extra.remove();
+    return null;
+  }
+  let dock=document.getElementById('dock');
+  if(dock) return dock;
+  const wrap=document.createElement('details');
+  wrap.className='dock';
+  wrap.innerHTML='<summary>Staff debug (optional)</summary><pre id="dock"></pre>';
+  document.body.appendChild(wrap);
+  return document.getElementById('dock');
+}
+function scrubMdDo(s){
+  return String(s||'')
+    .replace(/\bMD\/DO\b/g,'')
+    .replace(/,\s*M\.?D\.?\b/g,'')
+    .replace(/\bDr\.\s+/g,'')
+    .replace(/\s+/g,' ')
+    .trim();
+}
+function formatCiteDate(iso){
+  const m=String(iso||'').match(/^(\d{4})-(\d{2})-(\d{2})/);
+  if(!m) return String(iso||'');
+  const month=MONTHS[+m[2]-1];
+  if(!month) return String(iso||'');
+  return month+' '+String(+m[3])+', '+m[1];
+}
+function everydayPaperName(e){
+  if(!e) return 'Record page';
+  const role=e.classOrRole||'';
+  const fn=String(e.filename||e.plainLabel||e.name||'').toLowerCase();
+  if(role==='treating_notes'||/treatment_notes|ortho/.test(fn)) return 'Clinic visit notes';
+  if(role==='imaging_labs'||/mri|lumbar/.test(fn)) return 'Lumbar MRI';
+  if(role==='medications'||/medication/.test(fn)) return 'Medication list';
+  if(role==='function_questionnaires'||/function/.test(fn)) return 'Daily function form';
+  if(role==='prior_ssa_forms'||/3288|ssa/.test(fn)) return 'Prior Social Security form';
+  if(role==='treating_mss'||/mss|statement/.test(fn)) return 'Clinic statement form';
+  const st=e.sourceType||'';
+  if(st&&!/^EX-/.test(st)&&st!=='Imaging / labs') return st;
+  return 'Record page';
+}
+function everydayLabel(e){ return everydayPaperName(e); }
+function sourceNameFor(c,e){
+  const names=(c&&c.sourceNames)||[];
+  const role=(e&&e.classOrRole)||'';
+  let raw='';
+  if(role==='imaging_labs') raw=names.find(function(n){ return /imaging/i.test(n); })||names[1]||'Sample Imaging';
+  else if(role==='treating_notes'||role==='treating_mss'||role==='medications') raw=names.find(function(n){ return /ortho|clinic/i.test(n)&&!/imaging/i.test(n); })||names[0]||'Treating clinic';
+  else raw=names[0]||'';
+  let n=scrubMdDo(raw);
+  n=n.replace(/\s*\([^)]*\)/g,'');
+  n=n.replace(/\s+Center$/i,'');
+  n=n.replace(/\s+Clinic$/i,'');
+  return n.replace(/\s+/g,' ').trim();
+}
+function citeFromExhibit(c,e){
+  if(!e) return null;
+  const everydayName=everydayPaperName(e);
+  const sourceName=sourceNameFor(c,e);
+  const date=formatCiteDate(e.date);
+  return {everydayName,sourceName,date,id:e.id||''};
+}
+function citesForIds(c,ids){
+  const inv=c.exhibitInventory||[];
+  const out=[];
+  (ids||[]).forEach(function(id){
+    const e=inv.find(function(x){ return x.id===id; });
+    const cite=citeFromExhibit(c,e);
+    if(cite) out.push(cite);
+  });
+  return out;
+}
+function formatCite(cite){
+  if(!cite) return 'Not in this packet';
+  if(cite.notInPacket) return 'Not in this packet';
+  const parts=[cite.everydayName,cite.sourceName,cite.date].filter(Boolean);
+  return parts.length?parts.join(', '):'Not in this packet';
+}
+function formatCiteMiddot(cite){
+  if(!cite||cite.notInPacket) return 'Not in this packet';
+  const parts=[cite.everydayName,cite.sourceName,cite.date].filter(Boolean);
+  return parts.length?parts.join(' · '):'Not in this packet';
+}
+function formatCiteMiddotList(cites){
+  if(!cites||!cites.length) return 'Not in this packet';
+  const seen={};
+  const parts=[];
+  cites.forEach(function(cite){
+    const line=formatCiteMiddot(cite);
+    if(line&&line!=='Not in this packet'&&!seen[line]){ seen[line]=1; parts.push(line); }
+  });
+  return parts.join('; ')||'Not in this packet';
+}
+function secondaryExIds(cites){
+  const seen={};
+  const ids=[];
+  (cites||[]).forEach(function(cite){
+    const id=cite&&cite.id;
+    if(!id||!/^EX-/i.test(id)||seen[id]) return;
+    seen[id]=1;
+    ids.push(id);
+  });
+  return ids;
+}
+function formatCiteList(cites){
+  if(!cites||!cites.length) return 'Not in this packet';
+  const seen={};
+  const parts=[];
+  cites.forEach(function(cite){
+    const line=formatCite(cite);
+    if(line&&line!=='Not in this packet'&&!seen[line]){ seen[line]=1; parts.push(line); }
+  });
+  return parts.join('; ')||'Not in this packet';
+}
+function formatCiteListWithSecondary(cites){
+  const lead=formatCiteList(cites);
+  const ids=secondaryExIds(cites);
+  if(!ids.length||lead==='Not in this packet') return lead;
+  return lead+' ('+ids.join(', ')+')';
+}
+function citeHtml(cites){
+  const ids=secondaryExIds(cites);
+  const quiet=ids.length?' <span class="cite-quiet">'+esc(ids.join(', '))+'</span>':'';
+  return '<span class="cite">'+esc(formatCiteList(cites))+quiet+'</span>';
+}
+function quietExText(cites){
+  const ids=secondaryExIds(cites);
+  return ids.length?ids.join(', '):'';
+}
+function pagesExistForCase(c){
+  return ((c&&c.exhibitInventory)||[]).length>0 || zdrPages().length>0;
+}
+function supportStatusPlainOf(c,gaps){
+  const enumStatus=supportStatusOf(c);
+  const pages=pagesExistForCase(c);
+  if(!pages) return 'Still reading';
+  if(enumStatus==='PASS') return 'Ready to check';
+  return 'Needs more records';
+}
+function honestSupportEnum(c,board){
+  const pages=pagesExistForCase(c);
+  const plain=(board&&board.supportStatus)||supportStatusPlainOf(c,(board&&board.topGaps)||[]);
+  if(!pages) return 'FAIL';
+  if(plain==='Ready to check') return 'PASS';
+  return 'NEEDS_RECORDS';
+}
+function caseGaugeOf(c){
+  const enumStatus=supportStatusOf(c);
+  if(enumStatus==='PASS') return 'Strong';
+  if(enumStatus==='FAIL' && pagesExistForCase(c)) return 'Mixed';
+  return 'Thin';
+}
+function gapFromFinding(c,f){
+  const copy=GAP_COPY[f.code]||{};
+  const plain=copy.plain||findingText(f);
+  const why=copy.why||'';
+  const uploadAsk=copy.uploadAsk||'Add the missing papers.';
+  const cites=citesForIds(c,f.citeExhibits||[]);
+  return {plain,why,uploadAsk,cites,code:f.code||''};
+}
+function supportedFromCase(c){
+  const inv=c.exhibitInventory||[];
+  const findings=c.prioritizedFindings||[];
+  const out=[];
+  findings.forEach(function(f){
+    if(f.severity!=='info') return;
+    if(f.code==='RELEASE_LOCKED') return;
+    const copy=GAP_COPY[f.code];
+    const plain=copy&&copy.plain?copy.plain:findingText(f);
+    out.push({plain,cites:citesForIds(c,f.citeExhibits||[])});
+  });
+  const clinic=inv.find(function(e){ return e.classOrRole==='treating_notes'; });
+  const imaging=inv.find(function(e){ return e.classOrRole==='imaging_labs'; });
+  if(clinic){
+    const cites=citesForIds(c,[clinic.id]);
+    const hasBack=(c.impairments||[]).some(function(x){ return /back/i.test(x); });
+    if(hasBack && !out.some(function(x){ return /low back/i.test(x.plain); })){
+      out.unshift({plain:'Low back pain is documented in the clinic notes.',cites});
+    }
+    const domains=clinic.coversDomains||[];
+    if(domains.indexOf('stand')>=0 && domains.indexOf('walk')>=0 && !out.some(function(x){ return /standing and walking/i.test(x.plain); })){
+      out.splice(Math.min(1,out.length),0,{plain:'Standing and walking limits appear in the clinic visits.',cites});
+    }
+  }
+  if(imaging && !out.some(function(x){ return /MRI|imaging/i.test(x.plain); })){
+    out.push({plain:'A lumbar MRI is in this packet.',cites:citesForIds(c,[imaging.id])});
+  }
+  if(!out.length && inv.length){
+    out.push({plain:'Some pages are in this packet.',cites:inv.slice(0,2).map(function(e){ return citeFromExhibit(c,e); }).filter(Boolean)});
+  }
+  return out;
+}
+function topGapRowsOf(c){
+  const out=[];
+  const seen={};
+  function pushGap(row){
+    const key=String(row.plain||'').toLowerCase().replace(/[^a-z0-9]+/g,' ').trim();
+    if(!key) return;
+    if(seen[key]) return;
+    const hit=Object.keys(seen).some(function(k){ return key.indexOf(k)>=0||k.indexOf(key)>=0; });
+    if(hit) return;
+    seen[key]=1;
+    out.push(row);
+  }
+  (c.prioritizedFindings||[]).forEach(function(f){
+    if(f.severity==='info') return;
+    if(f.code==='RELEASE_LOCKED') return;
+    pushGap(gapFromFinding(c,f));
+  });
+  const g=c.gap||{};
+  (g.missingMer||[]).forEach(function(x){
+    const plain=scrubProseDash(x);
+    if(!plain) return;
+    pushGap({plain,why:'A year of primary-care notes is missing.',uploadAsk:'Upload primary-care notes from the last 12 months.',cites:[]});
+  });
+  (g.informedNotSubmitted||[]).forEach(function(x){
+    const plain=scrubProseDash(x);
+    if(!plain) return;
+    pushGap({plain,why:'We were told this page exists. It is not in this file.',uploadAsk:'Upload this page.',cites:[]});
+  });
+  return out;
+}
+function fileShowsOf(c){
+  const inv=(c&&c.exhibitInventory)||[];
+  const out=[];
+  const clinic=inv.find(function(e){ return e.classOrRole==='treating_notes'; });
+  const imaging=inv.find(function(e){ return e.classOrRole==='imaging_labs'; });
+  if(clinic){ const cite=citeFromExhibit(c,clinic); if(cite) out.push(cite); }
+  if(imaging){ const cite=citeFromExhibit(c,imaging); if(cite) out.push(cite); }
+  if(!out.length){
+    inv.slice(0,2).forEach(function(e){
+      const cite=citeFromExhibit(c,e);
+      if(cite) out.push(cite);
+    });
+  }
+  return out;
+}
+function stillMissingOf(c){
+  if(c&&c.id==='CASE-001'){
+    return {
+      plain:'Function over time after the MRI',
+      note:'One next gather step. Not a clinical opinion.',
+      uploadAsk:'Add dated notes that show function over time after the MRI.',
+      cites:[]
+    };
+  }
+  const gaps=topGapRowsOf(c);
+  const gather=gaps.find(function(g){
+    return g.code!=='HALLEX_5BD_RISK'&&g.code!=='RELEASE_LOCKED'&&g.code!=='DILIGENCE_STUB';
+  })||gaps[0]||null;
+  if(!gather){
+    return {
+      plain:'Specialists still need a fuller file.',
+      note:'One next gather step. Not a clinical opinion.',
+      uploadAsk:'Add the missing papers.',
+      cites:[]
+    };
+  }
+  return {
+    plain:String(gather.plain||'').replace(/\.$/,''),
+    note:'One next gather step. Not a clinical opinion.',
+    uploadAsk:gather.uploadAsk||'Add the missing papers.',
+    cites:gather.cites||[],
+    code:gather.code||''
+  };
+}
+function buildReviewBoard(c){
+  const supported=supportedFromCase(c);
+  const topGaps=topGapRowsOf(c);
+  const supportStatus=supportStatusPlainOf(c,topGaps);
+  const fileShows=fileShowsOf(c);
+  const stillMissing=stillMissingOf(c);
+  return {
+    supportStatus,
+    supported,
+    topGaps,
+    fileShows,
+    stillMissing,
+    extractedNotVerified:true,
+    readyToReviewIsNotApproved:true,
+    lettersOut:true,
+    sample:true,
+    releaseAllowed:false
+  };
+}
+function buildUploadReviewBoard(pages){
+  const cites=(pages||[]).map(function(e){
+    return {everydayName:e.name||e.id||'Uploaded page',sourceName:'This device',date:''};
+  });
+  const hasPages=!!(pages&&pages.length);
+  const stillMissing={
+    plain:hasPages?'A fuller file after extract':'Pages not visible yet',
+    note:hasPages?'Extracted is not verified. One next gather step. Not a clinical opinion.':'Pages not visible yet. We cannot see your file yet.',
+    uploadAsk:'Add the missing papers.',
+    cites:cites.slice(0,1)
+  };
+  return {
+    supportStatus:hasPages?'Needs more records':'Still reading',
+    supported:hasPages?[{plain:'Pages are saved on this device.',cites}]:[],
+    topGaps:[{
+      plain:stillMissing.plain+'.',
+      why:'Extracted is not verified.',
+      uploadAsk:stillMissing.uploadAsk,
+      cites:cites.slice(0,1)
+    }],
+    fileShows:cites,
+    stillMissing:stillMissing,
+    extractedNotVerified:true,
+    readyToReviewIsNotApproved:true,
+    lettersOut:true,
+    sample:false,
+    releaseAllowed:false
+  };
+}
+function exhibitCiteLabels(c){
+  return (c.exhibitInventory||[]).map(function(e){ return formatCite(citeFromExhibit(c,e)); }).filter(Boolean);
+}
+function inventoryStatus(c){
+  const board=buildReviewBoard(c);
+  if(board.supportStatus==='Ready to check') return {cls:'',text:'Ready to check'};
+  if(board.supportStatus==='Needs more records') return {cls:'warn',text:'Needs more records'};
+  return {cls:'warn',text:'Still reading'};
+}
+function onFileCiteLine(board){
+  if(board&&board.fileShows&&board.fileShows.length) return formatCiteList(board.fileShows);
+  const cites=[];
+  (board&&board.supported||[]).forEach(function(row){
+    (row.cites||[]).forEach(function(cite){ cites.push(cite); });
+  });
+  return formatCiteList(cites);
+}
+function primaryGapOf(board){
+  if(board&&board.stillMissing&&board.stillMissing.plain) return board.stillMissing;
+  return (board&&board.topGaps&&board.topGaps[0])||null;
+}
+function teachFileShows(c){
+  const pages=zdrPages();
+  if(pages.length){
+    return pages.slice(0,2).map(function(e){
+      return {everydayName:e.name||e.id||'Uploaded page',sourceName:'This device',date:''};
+    });
+  }
+  const inv=(c&&c.exhibitInventory)||[];
+  const clinic=inv.find(function(e){ return e.classOrRole==='treating_notes'; });
+  const imaging=inv.find(function(e){ return e.classOrRole==='imaging_labs'; });
+  const rows=[];
+  if(clinic){ const cite=citeFromExhibit(c,clinic); if(cite) rows.push(cite); }
+  if(imaging){ const cite=citeFromExhibit(c,imaging); if(cite) rows.push(cite); }
+  if(!rows.length){
+    inv.slice(0,2).forEach(function(e){ const cite=citeFromExhibit(c,e); if(cite) rows.push(cite); });
+  }
+  return rows;
+}
+function teachStillMissing(c, board){
+  const pages=zdrPages();
+  if(pages.length){
+    return {
+      plain:'Specialists still need a fuller file.',
+      why:'One next gather step. Extracted is not verified.',
+      uploadAsk:'Add the missing papers.',
+      cites:[]
+    };
+  }
+  if(c&&c.id==='CASE-001'){
+    return {
+      plain:'Function over time after the MRI',
+      why:'One next gather step. Not a clinical opinion.',
+      uploadAsk:'Upload clinic notes that show how you function over time after the MRI.',
+      cites:[]
+    };
+  }
+  const top=primaryGapOf(board);
+  if(!top){
+    return {
+      plain:'Needs more records',
+      why:'One next gather step. Not a clinical opinion.',
+      uploadAsk:'Add the missing papers.',
+      cites:[]
+    };
+  }
+  return {
+    plain:top.plain,
+    why:top.why||'One next gather step. Not a clinical opinion.',
+    uploadAsk:top.uploadAsk||'Add the missing papers.',
+    cites:top.cites||[]
+  };
+}
+function fileShowLine(cites){
+  if(!cites||!cites.length) return 'Pages not visible yet.';
+  return cites.map(function(cite){
+    const lead=[cite.everydayName,cite.sourceName,cite.date].filter(Boolean);
+    return lead.join(' · ');
+  }).join('\n');
+}
+function talkOpenerLine(board, c){
+  const caseRow=c||caseOf();
+  if(!board||board.supportStatus==='Still reading') return 'Pages not visible yet. We cannot see your file yet.';
+  const shows=teachFileShows(caseRow);
+  const missing=teachStillMissing(caseRow, board);
+  if(caseRow&&caseRow.id==='CASE-001'&&!zdrPages().length){
+    return 'Your desk shows clinic notes and an MRI. Function over time after the MRI is still missing.';
+  }
+  const onFile=fileShowLine(shows);
+  let line='Your desk shows pages in this file.';
+  if(onFile&&onFile!=='Pages not visible yet.') line='Your desk shows '+onFile.replace(/\n/g,'; ')+'.';
+  if(missing&&missing.plain) line+=' '+missing.plain+' is still missing.';
+  return line.replace(/ {2,}/g,' ').trim();
+}
+function gatherLine(board, c){
+  const missing=teachStillMissing(c||caseOf(), board);
+  return (missing&&missing.uploadAsk)||'Add the missing papers.';
+}
+function synthesizeGlance(c){
+  const board=buildReviewBoard(c);
+  const supported=board.supported.map(function(row){ return row.plain; });
+  const notYet=board.topGaps.map(function(g){ return g.plain; });
+  if(!supported.length) supported.push('Some pages are in this packet.');
+  if(!notYet.length) notYet.push('Nothing here is approved to send yet. Specialists review the file. Letters are not sold here.');
+  const top=board.topGaps[0];
+  const next=top&&top.uploadAsk?top.uploadAsk:'Add the missing papers.';
+  return {supported,notYet,next,board};
+}
+function paneHead(kicker,title,lede){
+  return '<p class="kicker">'+esc(kicker)+'</p><h1>'+esc(title)+'</h1>'+(lede?'<p class="lede">'+esc(lede)+'</p>':'');
+}
+function nextStep(){
+  if(step==='inventory'){step='glance';render();return;}
+  const i=STEPS.findIndex(s=>s.id===step);
+  if(i>=0&&i<STEPS.length-1){step=STEPS[i+1].id;render();}
+}
+function prevStep(){
+  if(step==='inventory'){step='upload';render();return;}
+  const i=STEPS.findIndex(s=>s.id===step);
+  if(i>0){step=STEPS[i-1].id;render();}
+}
+function bindNav(){
+  const n=document.getElementById('nextStep');
+  const p=document.getElementById('prevStep');
+  const backUpload=document.getElementById('backUpload');
+  const toGaps=document.getElementById('toGaps');
+  const toReady=document.getElementById('toReady');
+  if(n) n.onclick=nextStep;
+  if(p) p.onclick=prevStep;
+  if(backUpload) backUpload.onclick=()=>{step='upload';render();};
+  if(toGaps) toGaps.onclick=function(ev){ev.preventDefault();step='gaps';render();};
+  if(toReady) toReady.onclick=()=>{step='packet';render();};
+}
+function railOnId(){return step==='inventory'?'upload':step;}
+function isPhoneDesk(){
+  return typeof window!=='undefined'&&window.matchMedia&&window.matchMedia('(max-width: 820px)').matches;
+}
+function renderRail(){
+  const on=railOnId();
+  const c=caseOf();
+  const phone=isPhoneDesk();
+  const onReady=on==='packet';
+  const steps=STEPS.map(s=>'<a class="step'+(s.id===on?' on':'')+'" href="#'+c.id+'/'+s.id+'"><span class="l">'+esc(s.label)+'</span>'+(s.id===on&&!phone?'<span class="n">Active</span>':'')+'</a>').join('');
+  const cases=MODEL.cases.map((row,i)=>'<button type="button" class="'+(i===active?'active':'')+'" data-i="'+i+'">'+esc(row.id)+'</button>').join('');
+  // Phone Ready: picker above H1 is chrome-first HOLD. Keep CASE-001/002/006 on desk.
+  const picker=(phone&&onReady)?'':'<div class="case-switch"><span class="lbl">Cases</span>'+cases+'</div>';
+  document.getElementById('caseRail').innerHTML=
+    '<p class="rail-title">Your desk</p>'+
+    '<div class="rail-case"><span class="dot" aria-hidden="true"></span>'+esc(c.id)+'</div>'+
+    steps+
+    '<p class="rail-letters">Letters OUT · No letter button</p>'+
+    picker;
+  document.getElementById('caseRail').querySelectorAll('a.step').forEach(a=>a.onclick=function(ev){
+    ev.preventDefault();
+    const parts=(a.getAttribute('href')||'').replace(/^#/,'').split('/');
+    if(parts[1]) step=parts[1];
+    render();
+  });
+  document.getElementById('caseRail').querySelectorAll('button[data-i]').forEach(b=>b.onclick=()=>{active=+b.dataset.i;render();});
+}
+function stackBlock(kind,tag,innerHtml){
+  return '<div class="status-row '+kind+'" role="listitem"><div class="status-tag">'+esc(tag)+'</div><div class="status-body">'+innerHtml+'</div></div>';
+}
+function citedList(rows, emptyPlain){
+  const list=(rows&&rows.length)?rows:[{plain:emptyPlain,cites:[]}];
+  return '<ul class="cite-rows">'+list.map(function(row){
+    return '<li><strong>'+esc(row.plain)+'</strong> '+citeHtml(row.cites)+'</li>';
+  }).join('')+'</ul>';
+}
+function firstAndRest(arr,fallback){
+  const list=(arr&&arr.length)?arr:[fallback];
+  return {title:list[0],body:list.slice(1).join(' ')};
+}
+function chips(arr,cls){
+  if(!arr||!arr.length) return '';
+  return '<div class="chip-row">'+arr.map(x=>'<span class="chip'+(cls?(' '+cls):'')+'">'+esc(x)+'</span>').join('')+'</div>';
+}
+async function sha256(buf){
+  const h=await crypto.subtle.digest('SHA-256',buf);
+  return [...new Uint8Array(h)].map(b=>b.toString(16).padStart(2,'0')).join('');
+}
+async function addZdrFile(f){
+  if(!f)return {ok:false,msg:'No file'};
+  if(f.size>MAX)return {ok:false,msg:'fail_code=file_too_large'};
+  const buf=await f.arrayBuffer();
+  const hash=await sha256(buf);
+  let text='', fail=null;
+  const name=(f.name||'').toLowerCase();
+  if(name.endsWith('.txt')||name.endsWith('.md')||name.endsWith('.text')||f.type==='text/plain'){
+    text=new TextDecoder('utf-8',{fatal:false}).decode(buf);
+  } else if(name.endsWith('.pdf')||f.type==='application/pdf'){
+    fail='fail_code=pdf_serverless_ocr_not_in_slice';
+    text='[PDF bytes fingerprinted only in this ZDR slice. Text OCR for PDF is not enabled here. Use fixture files or the iOS Vision path.]';
+  } else {
+    return {ok:false,msg:'fail_code=unsupported_type'};
+  }
+  const arr=zdrLoad();
+  const id='UP-'+String(arr.length+1).padStart(3,'0');
+  arr.push({id,name:f.name,bytes:f.size,sha256:hash,ocrStatus:fail?'Failed':'Complete',extractState:'Extracted',verified:false,fail_code:fail,extractedText:text,letters:'OUT',releaseAllowed:false,zdr:true});
+  zdrSave(arr);
+  storePacketContext();
+  return {ok:true,id,fail,msg:fail?('Saved fingerprint. '+fail):('Saved '+id+'. Extracted, not verified. Nothing uploaded to our servers.')};
+}
+function renderUpload(){
+  const c=caseOf();
+  const arr=zdrLoad();
+  const inv=c.exhibitInventory||[];
+  let saved='';
+  if(arr.length){
+    saved='<li><span class="lbl">On this device</span><span class="val"><strong>'+esc(arr[arr.length-1].name)+'</strong> is saved in this browser tab only. A finished read is not a checked file. <button type="button" class="quiet-link" id="clearZdr">Clear this-device files</button></span></li>';
+  }
+  const pages=inv.map(e=>esc(everydayLabel(e))).join(', ');
+  return paneHead('Upload','Upload your records.','Photo, PDF, or plain text. Letters are not sold here. Specialists review the file. We say no if the records are not enough.')+
+    '<div class="drop" id="drop" role="region" aria-label="Upload area">'+
+    '<input class="sr-file" id="file" type="file" accept=".txt,.text,.md,.pdf,text/plain,application/pdf" aria-label="Upload a file"/>'+
+    '<div class="drop-icon" aria-hidden="true">+</div>'+
+    '<h2>Add records to this file</h2>'+
+    '<p>Drop files here, or choose from your device. One clear packet beats a pile of scraps.</p>'+
+    '</div>'+
+    '<ul class="trust-list" style="margin-top:28px;">'+
+    '<li><span class="lbl">What we take</span><span class="val"><strong>Photo, PDF, or plain text.</strong> Medical notes, work history, and supporting pages that belong to your claim.</span></li>'+
+    '<li><span class="lbl">What we do</span><span class="val"><strong>Specialists review the file.</strong> The next panes cite the pages they used. Plain English on what is supported, what is missing, and what comes next.</span></li>'+
+    '<li><span class="lbl">What we do not</span><span class="val"><strong>Letters are not sold here.</strong> We do not invent diagnoses. We do not promise approval.</span></li>'+
+    '<li><span class="lbl">Already in this packet</span><span class="val"><strong>'+esc(c.id)+'</strong> includes '+pages+'. Everyday names only. Not a live claimant file.</span></li>'+
+    saved+
+    '</ul>'+
+    '<div class="actions">'+
+    '<button type="button" class="btn btn-primary" id="nextStep">Continue to Glance</button>'+
+    '<button type="button" class="btn btn-ghost" id="pickFile">Choose files</button>'+
+    '</div>'+
+    '<p class="note" id="status">Decline when thin is the product working.</p>'+
+    '<p class="note"><a href="privacy.html">Privacy (draft)</a></p>';
+}
+function bindUpload(){
+  const file=document.getElementById('file');
+  const pick=document.getElementById('pickFile');
+  const drop=document.getElementById('drop');
+  const clear=document.getElementById('clearZdr');
+  function paintStatus(res){
+    const st2=document.getElementById('status');
+    if(st2) st2.textContent=res.ok?'Saved on this device only. A finished read is not a checked file.':(res.msg||'Could not add that file.');
+  }
+  async function handleFile(f){
+    const res=await addZdrFile(f);
+    render();
+    paintStatus(res);
+  }
+  if(pick&&file) pick.onclick=function(ev){ev.preventDefault();ev.stopPropagation();file.click();};
+  if(file) file.onchange=async function(ev){
+    const f=ev.target.files&&ev.target.files[0];
+    ev.target.value='';
+    await handleFile(f);
+  };
+  if(drop){
+    drop.addEventListener('dragover',function(e){e.preventDefault();drop.classList.add('is-over');});
+    drop.addEventListener('dragleave',function(){drop.classList.remove('is-over');});
+    drop.addEventListener('drop',async function(e){
+      e.preventDefault();
+      drop.classList.remove('is-over');
+      const f=e.dataTransfer.files&&e.dataTransfer.files[0];
+      await handleFile(f);
+    });
+  }
+  if(clear) clear.onclick=function(){sessionStorage.removeItem(ZDR_KEY);storePacketContext();render();const s=document.getElementById('status');if(s)s.textContent='This-device files cleared.';};
+}
+function renderInventory(){
+  const c=caseOf();
+  const st=inventoryStatus(c);
+  const rows=(c.exhibitInventory||[]).map(e=>'<div class="page-row"><h2>'+esc(everydayLabel(e))+'</h2><p class="note">Dated '+esc(e.date||'n/a')+' page</p></div>').join('');
+  const zdr=zdrLoad();
+  const zdrRows=zdr.map(e=>'<div class="page-row"><h2>'+esc(e.name||'This-device file')+'</h2><p class="note">Saved in this browser tab only. Not checked.</p></div>').join('');
+  return paneHead('Pages','What is in the file.','Everyday names for the pages in this packet.')+
+    '<span class="chip '+(st.cls==='warn'?'warn':(st.cls==='bad'?'bad':'accent'))+'">'+esc(st.text)+'</span>'+
+    '<p class="note">A finished scan is not the same as a checked file. Extracted is not verified.</p>'+
+    rows+zdrRows+
+    '<div class="actions"><button type="button" class="btn btn-primary" id="nextStep">Continue to Glance</button><button type="button" class="btn btn-ghost" id="backUpload">Back to Upload</button></div>';
+}
+function renderGlance(){
+  const c=caseOf();
+  const board=buildReviewBoard(c);
+  const next=board.topGaps[0]?board.topGaps[0].uploadAsk:'Add the missing papers.';
+  return paneHead('Glance','What the file shows.','Plain English. Each row cites the page we used.')+
+    '<div class="status-stack" role="list">'+
+    stackBlock('supported','Supported','<h2>In this file</h2>'+citedList(board.supported,'Some pages are in this packet.'))+
+    stackBlock('not-yet','Not supported yet','<h2>Still missing</h2>'+citedList(board.topGaps,'Nothing here is approved to send yet. Specialists review the file. Letters are not sold here.'))+
+    stackBlock('next','Next step','<h2>'+esc(next)+'</h2><p>We do not invent diagnoses. We do not promise approval.</p>')+
+    '</div>'+
+    '<div class="actions">'+
+    '<button type="button" class="btn btn-primary" id="toGaps">See what is missing</button>'+
+    '<button type="button" class="btn btn-ghost" id="backUpload">Back to Upload</button>'+
+    '</div>'+
+    '<p class="note">This glance is the live file read, not a promise.</p>';
+}
+function renderGaps(){
+  const c=caseOf();
+  const board=buildReviewBoard(c);
+  const gauge=caseGaugeOf(c);
+  const gaps=board.topGaps.length?board.topGaps:[{plain:'Specialists review the file. Letters are not sold here. Not ready to release.',why:'',uploadAsk:'Add the missing papers.',cites:[]}];
+  const held=board.supported.slice(0,3).map(function(row){ return row.plain; });
+  if(!held.length) held.push('Identity and basic work history');
+  const rows=gaps.map(function(g,i){
+    const lbl=i===0?'Top gap':'Also missing';
+    return '<li><span class="lbl">'+lbl+'</span><span class="val">'+
+      '<strong>'+esc(g.plain)+'</strong>'+
+      (g.why?'<p class="gap-why">Why it matters: '+esc(g.why)+'</p>':'')+
+      (g.uploadAsk?'<p class="gap-ask">What to upload: '+esc(g.uploadAsk)+'</p>':'')+
+      '<p class="gap-cite">What we already checked: '+esc(formatCiteList(g.cites))+(quietExText(g.cites)?' <span class="cite-quiet">'+esc(quietExText(g.cites))+'</span>':'')+'</p>'+
+      '</span></li>';
+  }).join('');
+  return paneHead('Gaps','What is still missing.','Needs more records. Decline when thin is the product working. Specialists will not stretch a weak file.')+
+    '<p class="support-line"><span class="chip">'+esc(board.supportStatus)+'</span> <span class="chip quiet">'+esc(gauge)+'</span></p>'+
+    '<ul class="trust-list gap-board">'+
+    rows+
+    '<li><span class="lbl">On file</span><span class="val"><strong>Held for review</strong>'+chips(held,'accent')+'</span></li>'+
+    '</ul>'+
+    '<div class="actions">'+
+    '<button type="button" class="btn btn-primary" id="backUpload">Add the missing papers</button>'+
+    '<button type="button" class="btn btn-ghost" id="toReady">Go to Ready</button>'+
+    '</div>'+
+    '<p class="note">When the file is thin, we say so. Letters are not sold here.</p>';
+}
+function renderPacket(){
+  const c=caseOf();
+  const payload=buildCarePacket();
+  const board=payload.board||buildReviewBoard(c);
+  const sample=payload.sample!==false;
+  const conf=confirmLoad();
+  const stampKey=sample?c.id:UPLOAD_CASE_ID;
+  const stamped=!!conf[stampKey];
+  const shows=(board.fileShows&&board.fileShows.length)?board.fileShows:teachFileShows(c);
+  const miss=board.stillMissing&&board.stillMissing.plain
+    ? {plain:board.stillMissing.plain,why:board.stillMissing.note||board.stillMissing.why||'One next gather step. Not a clinical opinion.'}
+    : teachStillMissing(c, board);
+  const extracting=board.supportStatus==='Still reading'&&!shows.length;
+  const staff=staffMode();
+  let showsHtml='<p class="note">Pages not visible yet. No invented EX codes. No invented findings.</p>';
+  if(!extracting&&shows.length){
+    showsHtml=shows.map(function(cite){
+      return '<p class="show-lead">'+esc(cite.everydayName||'Record page')+'</p><p class="show-meta">'+esc([cite.sourceName,cite.date].filter(Boolean).join(' · '))+'</p>';
+    }).join('');
+  }
+  const missHtml=
+    '<p class="show-lead">'+esc(miss.plain)+'</p>'+
+    '<p class="show-meta">'+esc(miss.why)+'</p>'+
+    '<a class="btn btn-ghost gap-check" href="#'+esc(c.id)+'/gaps" id="toGaps">See the gap checklist</a>';
+  const staffConfirm=staff
+    ? '<label class="check"><input type="checkbox" id="humanConfirm"'+(stamped?' checked':'')+'/> <span>'+(sample?'I looked at this packet. Specialists review the file. Letters stay out. Not ready to release.':'I looked at this-device pages. Specialists review the file. Letters stay out. Extracted is not verified. Not ready to release.')+'</span></label>'+
+      '<p class="note" id="confirmStamp">'+(stamped?('Local confirm saved '+esc(conf[stampKey])):'Staff confirm only. Ready to review is not approved.')+'</p>'
+    : '';
+  const ledeSample='Letters stay out. Specialists assemble the file. Conversation on your desk.<span class="lede-desk"> Ready to review is not approved. Extracted is not verified.</span>';
+  const ledeUpload='Letters stay out. Specialists assemble the file. Extracted is not verified.';
+  return '<h1>Not&nbsp;ready&nbsp;to&nbsp;release.</h1>'+
+    '<p class="lede">'+(sample?ledeSample:ledeUpload)+'</p>'+
+    '<div class="ready-teach">'+
+    '<div class="teach-card"><p class="kicker">What the file shows</p>'+showsHtml+'</div>'+
+    '<div class="teach-card"><p class="kicker">Still missing</p>'+missHtml+'</div>'+
+    '</div>'+
+    staffConfirm;
+}
+function bindPacket(){
+  const box=document.getElementById('humanConfirm');
+  if(!box)return;
+  box.onchange=function(){
+    const conf=confirmLoad();
+    const payload=buildCarePacket();
+    const id=payload.sample===false?UPLOAD_CASE_ID:caseOf().id;
+    if(box.checked) conf[id]=new Date().toISOString();
+    else delete conf[id];
+    confirmSave(conf);
+    render();
+  };
+}
+function paintCareRail(board){
+  const opener=document.getElementById('careOpener');
+  const you=document.getElementById('careYou');
+  const reply=document.getElementById('careReply');
+  if(!opener||!reply) return;
+  const c=caseOf();
+  const pages=zdrPages();
+  const sampleMark=pages.length?'':'';
+  const missing=teachStillMissing(c, board);
+  const whoNodes=document.querySelectorAll('#careBody .who');
+  if(whoNodes[0]) whoNodes[0].textContent='Care'+sampleMark;
+  if(whoNodes[1]) whoNodes[1].textContent='You'+sampleMark;
+  if(whoNodes[2]) whoNodes[2].textContent='Care'+sampleMark;
+  if(board.supportStatus==='Still reading'&&!pages.length){
+    opener.textContent='Pages not visible yet. We cannot see your file yet. Letters stay out.';
+    if(you) you.textContent='Why does it say not ready to release?';
+    reply.textContent='Ready to review is not approved. We will not invent pages or findings.';
+    return;
+  }
+  if(c.id==='CASE-001'&&!pages.length){
+    const phoneReady=typeof window!=='undefined'&&window.matchMedia&&window.matchMedia('(max-width: 820px)').matches;
+    opener.textContent=phoneReady
+      ?'Specialists assemble your file here. Letters stay out. Ask what still feels unclear.'
+      :'Letters stay out. Tell us what still feels unclear and we will point to the gap that matters most.';
+    if(you) you.textContent='Why does it say not ready to release?';
+    reply.textContent='Ready to review is not approved. The file still needs function over time after the MRI.';
+    return;
+  }
+  opener.textContent='Letters stay out. Tell us what still feels unclear and we will point to the gap that matters most.';
+  if(you) you.textContent='Why does it say not ready to release?';
+  reply.textContent='Ready to review is not approved. The file still needs '+missing.plain.replace(/\.$/,'')+'.';
+}
+function render(){
+  renderRail();
+  const payload=buildCarePacket();
+  const board=payload.board||buildReviewBoard(caseOf());
+  const pill=document.getElementById('casePillLabel');
+  if(pill){
+    if(payload.sample===false) pill.textContent=packetCaseId(payload);
+    else pill.textContent=caseOf().id+'';
+  }
+  const shell=document.getElementById('deskShell');
+  const care=document.getElementById('careRail');
+  const onReady=step==='packet';
+  if(shell) shell.classList.toggle('has-care',onReady);
+  document.body.classList.toggle('sis-phone-ready',isPhoneDesk()&&onReady);
+  const pane=document.getElementById('panel');
+  if(pane) pane.classList.toggle('teach-ready',onReady);
+  if(care){
+    if(onReady) care.removeAttribute('hidden');
+    else care.setAttribute('hidden','hidden');
+  }
+  const c=caseOf(), s=c.supportability||{}, a=c.audit||{};
+  paintCareRail(board);
+  let html='';
+  if(step==='upload') html=renderUpload();
+  else if(step==='inventory') html=renderInventory();
+  else if(step==='glance') html=renderGlance();
+  else if(step==='gaps') html=renderGaps();
+  else html=renderPacket();
+  document.getElementById('panel').innerHTML=html;
+  bindNav();
+  bindTalk();
+  if(step==='upload') bindUpload();
+  if(step==='packet') bindPacket();
+  writeHash();
+  storePacketContext();
+  const dock=staffDockEl();
+  if(dock) dock.textContent=JSON.stringify({
+    stamp:MODEL.stamp,lettersOut:true,releaseAllowed:false,shipBar:MODEL.shipBar,
+    case:c.id,packetCase:packetCaseId(payload),step:step,packetForgeKey:FORGE_PACKET_KEY,packetPortalKey:PORTAL_PACKET_KEY,
+    glance:glanceLine(c),
+    board:board,
+    readyFace:payload.readyFace||null,
+    physicalLimits:s.physical_RFC,
+    clinicStatement:s.MSS,
+    readyToSendToClaimant:false,plainDesk:true,
+    ocrCompleteNotVerified:true,
+    fixtureHashes:a.immutableHashList||[],
+    zdrCount:zdrLoad().length,
+    zdrHashes:zdrLoad().map(e=>e.sha256),
+    packetConfirm:!!confirmLoad()[payload.sample===false?UPLOAD_CASE_ID:c.id]
+  },null,2);
+}
+window.addEventListener('hashchange',function(){parseHash();render();});
+parseHash();
+render();
+(function(){
+  const btn=document.getElementById('listenBtn'), audio=document.getElementById('careAudio'), hint=document.getElementById('listenHint');
+  if(!btn||!audio) return;
+  function setOn(on){
+    btn.setAttribute('aria-pressed',on?'true':'false'); btn.textContent=on?'Sound on':'Sound off'; btn.classList.toggle('on',on);
+    hint.textContent=on?'Playing guide audio (sample)':'Guide audio. Not a letter.';
+    if(on){audio.play().catch(function(e){hint.textContent='Could not play: '+e.message;setOn(false);});} else {audio.pause();audio.currentTime=0;}
+  }
+  btn.onclick=function(){setOn(btn.getAttribute('aria-pressed')!=='true');};
+  audio.addEventListener('ended',function(){setOn(false);});
+})();
+</script></body></html>

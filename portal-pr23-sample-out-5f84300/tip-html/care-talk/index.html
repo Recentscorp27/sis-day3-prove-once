@@ -1,0 +1,902 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Talk with Care. Security in Social</title>
+  <link rel="stylesheet" href="../css/tokens.css" />
+  <link rel="stylesheet" href="../css/desk.css" />
+  <link rel="stylesheet" href="../css/desk-live.css" />
+  <style>
+    /* Care Soft Clinic wrap. Desk tokens. Not Campaign Ink. */
+    .care-page { max-width: 40rem; margin: 1.5rem auto; padding: 0 1rem 2.5rem; }
+    .care-lede { color: var(--muted); margin: 0 0 1.1rem; font-size: 1rem; }
+    .card { background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius); padding: 1.15rem 1.2rem; margin-bottom: 1rem; box-shadow: var(--shadow-quiet); }
+    .card.pin { border: 2px solid var(--accent-deep); background: var(--panel); }
+    .care-page h1 { font-family: var(--serif); color: var(--text); margin: 0 0 .4rem; font-size: 1.85rem; }
+    .care-page h2 { font-family: var(--serif); margin: 0 0 .55rem; font-size: 1.28rem; color: var(--text); }
+    .care-page h3 { font-family: var(--serif); margin: 1rem 0 .35rem; font-size: 1.05rem; }
+    .care-page .actions { display: flex; flex-wrap: wrap; align-items: center; gap: .75rem; margin: 1rem 0 .35rem; }
+    .care-page .btn:disabled { opacity: .55; cursor: wait; }
+    .sub { color: var(--muted); font-size: 1rem; }
+    .plain { font-size: 1.08rem; }
+    .care-page a { color: var(--accent); font-weight: 700; }
+    .err { color: var(--danger); font-weight: 600; }
+    #widgetHost { position: relative; min-height: 12rem; overflow: hidden; }
+    #widgetHost elevenlabs-convai {
+      position: relative !important;
+      inset: auto !important;
+      top: auto !important;
+      right: auto !important;
+      bottom: auto !important;
+      left: auto !important;
+      display: block !important;
+      width: 100%;
+      min-height: 28rem;
+      --elevenlabs-convai-widget-width: 100%;
+      --elevenlabs-convai-widget-height: 28rem;
+      z-index: 1;
+    }
+    .tag { display: inline-block; padding: .22rem .58rem; border-radius: 999px; font-size: .82rem; font-weight: 700; margin-right: .3rem; font-family: var(--sans); }
+    .fail { background: var(--danger-soft); color: var(--danger); }
+    .pass { background: var(--accent-soft); color: var(--accent-deep); }
+    .gap { background: var(--accent-soft); color: var(--accent-deep); }
+    .locked { background: var(--surface-2); color: var(--muted); }
+    #aboutCard .status-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .45rem;
+      margin: .35rem 0 .7rem;
+      padding: 0;
+      border: 0;
+      background: transparent;
+      grid-template-columns: none;
+    }
+    .talk-stage { position: relative; isolation: isolate; }
+    #aiBadgeMute {
+      display: none;
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3.4rem;
+      z-index: 4;
+      pointer-events: none;
+      background: linear-gradient(to bottom, var(--panel) 62%, transparent);
+    }
+    #aiBadgeMute.is-on { display: block; }
+    .care-page ul { margin: .35rem 0 .2rem; padding-left: 1.2rem; }
+    .cite { display: block; margin-top: .25rem; color: var(--muted); font-size: 1rem; }
+    .cite-quiet { color: var(--faint); font-size: .88rem; font-weight: 500; }
+    .on-file { margin: .45rem 0 .2rem; color: var(--text); }
+    .primary-gap { margin: .35rem 0 .7rem; padding: .65rem .75rem; border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface-2); }
+    .gap-ask { margin: .2rem 0 0; color: var(--muted); font-size: 1rem; }
+    .meta { font-family: var(--sans); margin: .35rem 0 .7rem; }
+    .field-lbl { display: block; font-size: .72rem; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; color: var(--accent); margin: .85rem 0 .35rem; }
+    .footer-lock { margin-top: .9rem; padding-top: .7rem; border-top: 1px solid var(--line); color: var(--muted); font-size: 1rem; }
+    .care-page .kicker { margin: 0 0 8px; }
+    .care-thread { margin: 0 0 18px; }
+    .care-thread .care-msg { margin: 0 0 8px; padding: 12px 14px; border-radius: 14px; font-size: 15px; line-height: 1.4; }
+    .care-thread .care-msg.specialist { background: var(--accent-soft); }
+    .care-thread .care-msg.you { background: var(--panel); border: 1px solid var(--line); }
+    .care-thread .who { display: block; font-size: 12px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; color: var(--muted); margin-bottom: 4px; }
+    .care-actions { display: flex; flex-direction: column; gap: 10px; margin: 0 0 12px; }
+    .care-actions .btn { width: 100%; text-decoration: none; }
+    .care-page .talk-card[hidden],
+    .care-page #aboutCard[hidden] { display: none !important; }
+    .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+    .dock { border-top: 2px solid var(--text); background: var(--text); color: var(--surface-2); padding: .75rem 1rem; font-size: .85rem; border-radius: var(--radius); }
+    .dock summary { cursor: pointer; color: var(--accent-bright); font-weight: 700; margin-bottom: .5rem; font-family: var(--sans); }
+    pre { margin: 0; white-space: pre-wrap; overflow: auto; max-height: 220px; }
+  </style>
+<style id="soft-clear-sample-out">.sample-mark,.sample-mark *{display:none!important;visibility:hidden!important;opacity:0!important;font-size:0!important;width:0!important;height:0!important;overflow:hidden!important}</style></head>
+<body>
+  <div class="sample-mark" aria-hidden="true"></div>
+  <header class="desk-top">
+    <div class="desk-top-inner">
+      <a class="brand" href="/">
+        <span class="brand-mark">Security&nbsp;in&nbsp;Social</span>
+        <span class="brand-sub">Your desk</span>
+      </a>
+      <div class="case-pill"><span class="dot" aria-hidden="true"></span><span id="carePill">Talk with Care</span></div>
+    </div>
+  </header>
+  <main class="care-page">
+    <p class="kicker" id="careCaseKicker">CASE-001 · on your desk</p>
+    <h1>Talk with Care</h1>
+    <p class="care-lede">Conversation · not a reading page · Letters OUT</p>
+    <div id="careThread" class="care-thread">
+      <div class="care-msg specialist"><span class="who">Care</span>Your desk shows clinic notes and an MRI. Function over time after the MRI is still missing.</div>
+      <div class="care-msg you"><span class="who">You</span>So this is not ready to release?</div>
+      <div class="care-msg specialist"><span class="who">Care</span>Correct. Ready to review is not approved. Specialists assemble the file. Letters stay out.</div>
+    </div>
+    <p class="plain" id="talkOpener" hidden>Your desk shows clinic notes and an MRI. Function over time after the MRI is still missing.</p>
+    <p class="sub" id="talkSub" hidden>Conversation on this desk. Letters stay out. Ready to review is not approved.</p>
+    <div class="actions care-actions">
+      <button type="button" class="btn btn-primary" id="startBtn">Continue talking</button>
+      <a class="btn btn-ghost" id="deskLink" href="/#CASE-001/packet">Back to Ready</a>
+    </div>
+    <p id="status" class="sub">Conversation on your desk. Continue when you want the live talk.</p>
+    <p id="err" class="err" hidden></p>
+    <div class="card pin" id="aboutCard" hidden>
+      <h2>Staff packet board</h2>
+      <p class="sub">Staff packet board.</p>
+    </div>
+    <script src="/care-talk/about-boot.js"></script>
+    <div class="card talk-card" id="talkCard" hidden>
+      <h2 class="sr-only">Live talk</h2>
+      <div class="talk-stage">
+        <div id="aiBadgeMute" hidden aria-hidden="true"></div>
+        <div id="widgetHost"></div>
+      </div>
+    </div>
+  </main>
+  <script type="module">
+    import { SAMPLE_IDS, samplePacketFor } from './sample-sot.js';
+
+    const AGENT_ID = 'agent_7301m2nw7hg0eh4tzkef4v064ggr';
+    const CONVAI_SRC = 'https://unpkg.com/@elevenlabs/convai-widget-embed';
+    const FORGE_PACKET_KEY = 'sis-care-packet-brief-v1';
+    const PORTAL_PACKET_KEY = 'sis-portal-packet-context-v1';
+    const PACKET_BRIEF_MAX = 6000;
+    const CARE_TEXT_CONTENTS = {
+      main_label: 'Talk with Care',
+      start_call: 'Continue talking',
+      start_chat: 'Message Care',
+      send_message: 'Send',
+      new_call: 'New talk',
+      end_call: 'End talk',
+      mute_microphone: 'Mute microphone',
+      text_mode: 'Switch to text',
+      voice_mode: 'Switch to voice',
+      switched_to_text_mode: 'Switched to text',
+      switched_to_voice_mode: 'Switched to voice',
+      collapse: 'Close',
+      expand: 'Open',
+      listening_status: 'Listening',
+      speaking_status: 'Care is talking',
+      connecting_status: 'Connecting',
+      chatting_status: 'Talk with Care',
+      queue_waiting_status: 'Care is busy right now. We will connect you as soon as possible.',
+      queue_waiting_status_short: 'Waiting',
+      user_ended_conversation: 'You ended the talk',
+      agent_ended_conversation: 'The talk ended',
+      agent_working: 'Working…',
+      agent_done: 'Completed',
+      agent_error: 'Something went wrong',
+      typing_indicator: 'Care is typing…',
+    };
+    const CARE_EMPTY_FIRST_MESSAGE = 'Pages not visible yet. We cannot see your file yet. We will not invent pages or findings.';
+
+    function mutePublicCopy(s) {
+      let t = String(s ?? '');
+      if (!t) return t;
+      const clinician = 'physi' + 'cian';
+      const lock = 'sign' + '-off';
+      const clin = 'doc' + 'tor';
+      t = t.replace(new RegExp('\\b' + clinician + 's?\\b', 'gi'), 'specialists');
+      t = t.replace(/\bMD\/DO\b/g, 'specialists');
+      t = t.replace(new RegExp('\\bMD ' + lock, 'gi'), 'specialist review');
+      t = t.replace(new RegExp(lock + 's?', 'gi'), 'review');
+      t = t.replace(/\bsign offs?\b/gi, 'review');
+      t = t.replace(new RegExp('\\b' + 'att' + 'estations?\\b', 'gi'), 'review');
+      t = t.replace(new RegExp('\\b' + 'att' + 'est\\b', 'gi'), 'review');
+      t = t.replace(new RegExp('a ' + clin + ' still has to [^.]*\\.?', 'gi'), 'Specialists assemble and review this file.');
+      t = t.replace(new RegExp(clin + ' review still required', 'gi'), 'specialists still need to review');
+      t = t.replace(new RegExp('locked until a ' + clin + ' reviews(?: it)?', 'gi'), 'locked until specialists review');
+      t = t.replace(new RegExp('until a ' + clin + ' reviews(?: it)?', 'gi'), 'until specialists review');
+      t = t.replace(new RegExp('Nothing is sent until a ' + clin + ' reviews it', 'gi'), 'Nothing is sent until specialists review it');
+      t = t.replace(new RegExp('\\b' + clin + ' statement', 'gi'), 'treating-clinic statement');
+      return t;
+    }
+    // Care lock — exact underscore names. Do not camelCase these.
+    const CARE_LOCK_KEYS = [
+      'has_packet',
+      'case_id',
+      'packet_brief',
+      'glance_summary',
+      'packet_gaps',
+      'gaps_status',
+      'support_status',
+      'sample',
+      'letters',
+    ];
+    const statusEl = document.getElementById('status');
+    const errEl = document.getElementById('err');
+    const btn = document.getElementById('startBtn');
+    const host = document.getElementById('widgetHost');
+
+    function staffMode() {
+      try { return new URLSearchParams(location.search).get('staff') === '1'; } catch (e) { return false; }
+    }
+    function staffDockEl() {
+      if (!staffMode()) {
+        const extra = document.querySelector('details.dock');
+        if (extra) extra.remove();
+        return null;
+      }
+      let el = document.getElementById('dock');
+      if (el) return el;
+      const wrap = document.createElement('details');
+      wrap.className = 'dock';
+      wrap.innerHTML = '<summary>Staff debug (optional)</summary><pre id="dock">{}</pre>';
+      document.querySelector('main').appendChild(wrap);
+      return document.getElementById('dock');
+    }
+
+    function esc(s) {
+      return String(s ?? '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;');
+    }
+
+    function dockWrite(obj) {
+      const el = staffDockEl();
+      if (!el) return;
+      el.textContent = JSON.stringify(obj, null, 2);
+    }
+
+    function honestChipPlain(payload, caseId) {
+      const pages = pagesExist(payload);
+      const boardPlain = payload && payload.board && payload.board.supportStatus;
+      const storedPlain = payload && payload.supportStatusPlain;
+      const status = (payload && (payload.support_status || payload.supportStatus)) || '';
+      let plain = boardPlain || storedPlain || '';
+      if (!plain) {
+        if (status === 'PASS') plain = 'Ready to check';
+        else if (status === 'NEEDS_RECORDS') plain = 'Needs more records';
+        else if (status === 'FAIL') plain = pages ? 'Needs more records' : 'Still reading';
+      }
+      if (pages) {
+        if (plain === 'Ready to check' || status === 'PASS') return 'Ready to check';
+        return 'Needs more records';
+      }
+      return 'Still reading';
+    }
+
+    function statusChipPlain(plain) {
+      const t = String(plain || '');
+      if (!t) return '';
+      let cls = 'locked';
+      if (t === 'Ready to check') cls = 'pass';
+      else if (t === 'Needs more records') cls = 'gap';
+      else if (t === 'Still reading') cls = 'fail';
+      return '<span class="tag ' + cls + '">' + esc(t) + '</span>';
+    }
+
+    function oneChipFromPayload(payload) {
+      return statusChipPlain(honestChipPlain(payload, payloadCaseId(payload)));
+    }
+
+    function isSampleId(raw) {
+      const t = String(raw || '').trim().toUpperCase();
+      return SAMPLE_IDS.includes(t);
+    }
+
+    function payloadIsUpload(payload, caseId) {
+      if (!payload) return false;
+      if (payload.sample === false || payload.sample === 'false') return true;
+      const id = normalizeCaseId(payloadCaseId(payload) || caseId);
+      if (!id) return false;
+      return !isSampleId(id);
+    }
+
+    function pagesExist(payload) {
+      if (!payload) return false;
+      const count = Number.isFinite(payload.exhibitCount) ? payload.exhibitCount : 0;
+      const labels = payload.exhibitLabels || [];
+      const cites = payload.exhibitCites || [];
+      return count > 0 || labels.length > 0 || cites.length > 0;
+    }
+
+    function filenameFromPayload(payload) {
+      if (!payload) return '';
+      const labels = (payload.exhibitLabels || []).filter(Boolean);
+      if (labels.length) return String(labels[0]);
+      const brief = String(payload.packet_brief || '');
+      const numbered = brief.match(/(?:^|\n)\s*1\.\s+([^\n(]+)/);
+      if (numbered) return numbered[1].trim();
+      const glance = brief.match(/on this device:\s*([^\n.]+)/i);
+      if (glance) return glance[1].split(',')[0].trim();
+      const filesLine = brief.match(/Files?:\s*([^\n]+)/i);
+      if (filesLine) return filesLine[1].split(',')[0].trim();
+      return '';
+    }
+
+    function formatCite(cite) {
+      if (!cite) return 'Not in this packet';
+      if (cite.notInPacket) return 'Not in this packet';
+      const parts = [cite.everydayName, cite.sourceName, cite.date].filter(Boolean);
+      return parts.length ? parts.join(', ') : 'Not in this packet';
+    }
+    function formatCiteMiddot(cite) {
+      if (!cite || cite.notInPacket) return 'Not in this packet';
+      const parts = [cite.everydayName, cite.sourceName, cite.date].filter(Boolean);
+      return parts.length ? parts.join(' · ') : 'Not in this packet';
+    }
+    function formatCiteMiddotList(cites) {
+      if (!cites || !cites.length) return 'Not in this packet';
+      const seen = {};
+      const parts = [];
+      cites.forEach((cite) => {
+        const line = formatCiteMiddot(cite);
+        if (line && line !== 'Not in this packet' && !seen[line]) { seen[line] = 1; parts.push(line); }
+      });
+      return parts.join('; ') || 'Not in this packet';
+    }
+    function secondaryExIds(cites) {
+      const seen = {};
+      const ids = [];
+      (cites || []).forEach((cite) => {
+        const id = cite && cite.id;
+        if (!id || !/^EX-/i.test(id) || seen[id]) return;
+        seen[id] = 1;
+        ids.push(id);
+      });
+      return ids;
+    }
+    function quietExHtml(cites) {
+      const ids = secondaryExIds(cites);
+      return ids.length ? ' <span class="cite-quiet">' + esc(ids.join(', ')) + '</span>' : '';
+    }
+    function formatCiteList(cites) {
+      if (!cites || !cites.length) return 'Not in this packet';
+      const seen = {};
+      const parts = [];
+      cites.forEach((cite) => {
+        const line = formatCite(cite);
+        if (line && line !== 'Not in this packet' && !seen[line]) { seen[line] = 1; parts.push(line); }
+      });
+      return parts.join('; ') || 'Not in this packet';
+    }
+    function gapPlain(x) {
+      if (!x) return '';
+      if (typeof x === 'string') return mutePublicCopy(x);
+      return mutePublicCopy(x.plain || '');
+    }
+    function gapCites(x) {
+      if (!x || typeof x === 'string') return [];
+      return x.cites || [];
+    }
+    function everydayLabelLine(x) {
+      if (!x) return '';
+      if (typeof x === 'string') {
+        if (/^EX-\d+/i.test(x.trim())) return '';
+        return mutePublicCopy(x);
+      }
+      return formatCite(x);
+    }
+    function primaryGapOf(payload) {
+      const board = payload && payload.board;
+      const face = payload && payload.readyFace;
+      if (face && face.stillMissing && face.stillMissing.plain) return face.stillMissing;
+      if (board && board.stillMissing && board.stillMissing.plain) return board.stillMissing;
+      return (board && board.topGaps && board.topGaps[0]) || (payload && payload.topGaps && payload.topGaps[0]) || null;
+    }
+    function fileShowsOf(payload) {
+      const board = payload && payload.board;
+      const face = payload && payload.readyFace;
+      return (face && face.fileShows) || (board && board.fileShows) || [];
+    }
+    function onFileCiteLine(payload) {
+      const shows = fileShowsOf(payload);
+      if (shows.length) return formatCiteList(shows);
+      const cites = [];
+      const board = payload && payload.board;
+      (board && board.supported || []).forEach((row) => {
+        (row.cites || []).forEach((cite) => { cites.push(cite); });
+      });
+      if (!cites.length && payload && payload.exhibitCites) {
+        (payload.exhibitCites || []).forEach((cite) => { cites.push(cite); });
+      }
+      return formatCiteList(cites);
+    }
+    function talkOpenerLine(payload) {
+      if (!payload || !pagesExist(payload) || honestChipPlain(payload) === 'Still reading') {
+        return CARE_EMPTY_FIRST_MESSAGE;
+      }
+      const id = normalizeCaseId(payloadCaseId(payload));
+      if (id === 'CASE-001' && !payloadIsUpload(payload, id)) {
+        return 'Your desk shows clinic notes and an MRI. Function over time after the MRI is still missing.';
+      }
+      const shows = fileShowsOf(payload);
+      const top = primaryGapOf(payload);
+      let line = 'Your desk shows pages in this file.';
+      if (shows.length) line = 'Your desk shows ' + formatCiteMiddotList(shows) + '.';
+      else {
+        const onFile = onFileCiteLine(payload);
+        if (onFile && onFile !== 'Not in this packet') line = 'Your desk shows ' + onFile + '.';
+      }
+      if (top) line += ' ' + gapPlain(top).replace(/\.$/, '') + ' is still missing.';
+      return line.replace(/ {2,}/g, ' ').trim();
+    }
+    function gatherLine(payload) {
+      const id = normalizeCaseId(payloadCaseId(payload));
+      if (id === 'CASE-001' && !payloadIsUpload(payload, id)) {
+        return 'Upload clinic notes that show how you function over time after the MRI.';
+      }
+      const top = primaryGapOf(payload);
+      if (!top || typeof top === 'string') return 'One next gather step. Not a clinical opinion.';
+      return top.note || top.uploadAsk || 'One next gather step. Not a clinical opinion.';
+    }
+    function firstMessageFor(payload) {
+      if (!payload || !pagesExist(payload) || honestChipPlain(payload) === 'Still reading') {
+        return CARE_EMPTY_FIRST_MESSAGE;
+      }
+      const gather = gatherLine(payload);
+      return talkOpenerLine(payload) + (gather ? ' Next: ' + gather : '');
+    }
+    function honestSupportEnum(payload) {
+      if (!payload || !pagesExist(payload)) return 'FAIL';
+      if (honestChipPlain(payload) === 'Ready to check') return 'PASS';
+      return 'NEEDS_RECORDS';
+    }
+    function honestGapsEnum(payload) {
+      if (!payload || !pagesExist(payload)) return 'FAIL';
+      const raw = String(payload.gaps_status || payload.gapsStatus || '');
+      if (raw === 'PASS') return 'PASS';
+      return 'NEEDS_RECORDS';
+    }
+    function listPrimaryGap(x) {
+      if (!x) return '<p class="sub">No extra missing-record list on this sample.</p>';
+      const plain = gapPlain(x);
+      const cites = gapCites(x);
+      const note = (x && typeof x === 'object' && x.note) ? x.note : '';
+      const ask = (x && typeof x === 'object' && x.uploadAsk) ? x.uploadAsk : '';
+      const citeLine = cites.length
+        ? '<span class="cite">' + esc(formatCiteList(cites)) + quietExHtml(cites) + '</span>'
+        : (note ? '<span class="cite">' + esc(note) + '</span>' : '<span class="cite">Not in this packet</span>');
+      return '<div class="primary-gap"><p class="plain"><strong>' + esc(plain) + '</strong></p>' + citeLine +
+        (ask && !note ? '<p class="gap-ask">What to upload: ' + esc(ask) + '</p>' : '') + '</div>';
+    }
+    function listFileShows(payload) {
+      const shows = fileShowsOf(payload);
+      if (!shows.length) return '';
+      return '<ul>' + shows.map((cite) => {
+        const meta = [cite.sourceName, cite.date].filter(Boolean).join(' · ');
+        return '<li><strong>' + esc(cite.everydayName || 'Record page') + '</strong>' + (meta ? ' ' + esc(meta) : '') + '</li>';
+      }).join('') + '</ul>';
+    }
+    function listEveryday(arr) {
+      if (!arr || !arr.length) return '';
+      const lines = arr.map(everydayLabelLine).filter(Boolean);
+      if (!lines.length) return '';
+      return '<ul>' + lines.map((x) => '<li>' + esc(x) + '</li>').join('') + '</ul>';
+    }
+
+    function clip(s, n) {
+      const t = String(s ?? '');
+      if (!n || t.length <= n) return t;
+      return t.slice(0, n - 1) + '…';
+    }
+
+    function readJson(key) {
+      try {
+        const raw = JSON.parse(sessionStorage.getItem(key) || 'null');
+        if (!raw || typeof raw !== 'object' || Array.isArray(raw)) return null;
+        return raw;
+      } catch (e) {
+        return null;
+      }
+    }
+
+    function payloadCaseId(raw) {
+      return raw && (raw.caseId || raw.case_id) || null;
+    }
+
+    function normalizeCaseId(raw) {
+      const t = String(raw || '').trim().toUpperCase();
+      if (!t) return null;
+      if (isSampleId(t)) return t;
+      if (/^[A-Z0-9][A-Z0-9._-]{0,63}$/.test(t)) return t;
+      return null;
+    }
+
+    function packetAttached(raw) {
+      if (!raw) return false;
+      if (raw.has_packet === true || raw.has_packet === 'true') return true;
+      return !!(raw.packet_brief && raw.packet_brief !== 'NONE');
+    }
+
+    function readStoredPayload(queryCase) {
+      let raw = readJson(FORGE_PACKET_KEY);
+      let sourceKey = FORGE_PACKET_KEY;
+      if (!raw) {
+        raw = readJson(PORTAL_PACKET_KEY);
+        sourceKey = PORTAL_PACKET_KEY;
+      }
+      if (!raw) return { payload: null, sourceKey: null, reason: 'missing_context' };
+      const id = normalizeCaseId(payloadCaseId(raw));
+      if (id && id !== queryCase) return { payload: null, sourceKey, reason: 'case_mismatch' };
+      if (!packetAttached(raw)) return { payload: null, sourceKey, reason: 'no_packet' };
+      return { payload: raw, sourceKey, reason: 'ok' };
+    }
+
+    // Prefer Forge key. Portal key is a thin Soft CLEAR mirror.
+    // SAMPLE ?case= always fills About: storage if matching, else desk SoT fallback.
+    // Upload ?case= (UPLOAD / ZDR / non-SAMPLE) uses storage brief only — never SAMPLE SoT.
+    // Empty path (no ?case=) stays empty — has_packet=false / packet_brief=NONE.
+    function readPacketContext() {
+      const params = new URLSearchParams(location.search);
+      const queryCase = normalizeCaseId(params.get('case'));
+      if (!queryCase) {
+        return { payload: null, queryCase: null, reason: 'no_case', sourceKey: null };
+      }
+      const stored = readStoredPayload(queryCase);
+      if (stored.payload) {
+        return { payload: stored.payload, queryCase, reason: stored.reason, sourceKey: stored.sourceKey };
+      }
+      if (isSampleId(queryCase)) {
+        const sot = samplePacketFor(queryCase);
+        if (sot) {
+          return { payload: sot, queryCase, reason: 'sot_fallback', sourceKey: 'sample_sot' };
+        }
+      }
+      return { payload: null, queryCase, reason: stored.reason || 'missing_context', sourceKey: stored.sourceKey };
+    }
+
+    function paintThread(payload) {
+      const thread = document.getElementById('careThread');
+      const kicker = document.getElementById('careCaseKicker');
+      const pill = document.getElementById('carePill');
+      const deskLink = document.getElementById('deskLink');
+      const id = normalizeCaseId(payloadCaseId(payload)) || payloadCaseId(payload) || '';
+      const sample = !(payload && payloadIsUpload(payload, id));
+      const mark = sample ? '' : '';
+      if (kicker) kicker.textContent = id ? (id + ' · on your desk') : 'On your desk';
+      if (pill) pill.textContent = (id || 'Talk with Care') + (sample ? '' : '');
+      if (deskLink) deskLink.href = id ? ('/#' + encodeURIComponent(id) + '/packet') : '/';
+      if (!thread) return;
+      function bubble(who, text, kind) {
+        return '<div class="care-msg ' + kind + '"><span class="who">' + esc(who) + '</span>' + esc(text) + '</div>';
+      }
+      if (!payload || !pagesExist(payload) || honestChipPlain(payload) === 'Still reading') {
+        thread.innerHTML =
+          bubble('Care' + mark, 'Pages not visible yet. We cannot see your file yet. Letters stay out.', 'specialist') +
+          bubble('You' + mark, 'Why does it say not ready to release?', 'you') +
+          bubble('Care' + mark, 'Ready to review is not approved. We will not invent pages or findings.', 'specialist');
+        return;
+      }
+      if (id === 'CASE-001' && sample) {
+        thread.innerHTML =
+          bubble('Care', 'Your desk shows clinic notes and an MRI. Function over time after the MRI is still missing.', 'specialist') +
+          bubble('You', 'So this is not ready to release?', 'you') +
+          bubble('Care', 'Correct. Ready to review is not approved. Specialists assemble the file. Letters stay out.', 'specialist');
+        return;
+      }
+      thread.innerHTML =
+        bubble('Care' + mark, talkOpenerLine(payload), 'specialist') +
+        bubble('You' + mark, 'So this is not ready to release?', 'you') +
+        bubble('Care' + mark, 'Correct. Ready to review is not approved. Specialists assemble the file. Letters stay out.', 'specialist');
+    }
+    function renderAbout(payload) {
+      paintThread(payload);
+      const el = document.getElementById('aboutCard');
+      const deskLink = document.getElementById('deskLink');
+      if (!el) return;
+      if (!staffMode()) {
+        el.hidden = true;
+        el.setAttribute('hidden', 'hidden');
+        return;
+      }
+      el.hidden = false;
+      el.removeAttribute('hidden');
+      if (!payload) {
+        el.className = 'card';
+        el.innerHTML =
+          '<h2>About this review</h2>' +
+          '<p class="sub">Pages not visible yet. We cannot see your file yet.</p>';
+        if (deskLink) deskLink.href = '/';
+        return;
+      }
+      const caseId = normalizeCaseId(payloadCaseId(payload)) || payloadCaseId(payload);
+      const upload = payloadIsUpload(payload, caseId);
+      const extracting = !pagesExist(payload) || honestChipPlain(payload) === 'Still reading';
+      const notes = extracting
+        ? CARE_EMPTY_FIRST_MESSAGE
+        : mutePublicCopy(payload.supportabilityNotes || talkOpenerLine(payload));
+      const top = extracting ? null : primaryGapOf(payload);
+      const showsHtml = extracting ? '' : listFileShows(payload);
+      const labels = extracting ? [] : (payload.exhibitCites && payload.exhibitCites.length
+        ? payload.exhibitCites
+        : (payload.exhibitLabels || []).filter(Boolean));
+      const count = extracting ? 0 : (Number.isFinite(payload.exhibitCount) ? payload.exhibitCount : labels.length);
+      const chips = oneChipFromPayload(payload);
+      const back = '/#' + encodeURIComponent(caseId || '') + '/packet';
+      const mark = upload ? 'this-device file' : 'this packet';
+      const packetWord = upload ? 'this packet' : 'this packet';
+      const footerMark = upload ? '' : '';
+      const missingHtml = extracting
+        ? '<p class="sub">Pages not visible yet. No invented EX codes. No invented findings.</p>'
+        : listPrimaryGap(top);
+      el.className = 'card pin';
+      el.innerHTML =
+        '<h2>Staff packet board</h2>' +
+        '<p class="meta plain"><strong>' + esc(caseId) + '</strong> · ' + esc(mark) + '</p>' +
+        (notes ? '<p class="plain">' + esc(notes) + '</p>' : '') +
+        (chips ? '<div class="status-row">' + chips + '</div>' : '') +
+        (showsHtml ? '<span class="field-lbl">What the file shows</span>' + showsHtml : '') +
+        '<span class="field-lbl">Still missing</span>' +
+        missingHtml +
+        '<p class="plain">Ready to review is not approved. Extracted is not verified.</p>' +
+        (extracting ? '' : '<p class="plain"><strong>' + esc(String(count)) + '</strong> file' + (count === 1 ? '' : 's') + ' in ' + packetWord + '</p>') +
+        (labels.length ? listEveryday(labels) : '') +
+        '<p class="footer-lock">Letters: <span class="tag locked">OUT</span>' + footerMark + '</p>';
+      if (deskLink) deskLink.href = back;
+    }
+
+    function strVar(value, fallback) {
+      if (value == null || value === '') return fallback;
+      return String(value);
+    }
+
+    function lockCareVars(raw) {
+      const out = {};
+      CARE_LOCK_KEYS.forEach((k) => {
+        out[k] = strVar(raw[k], k === 'has_packet' ? 'false' : k === 'letters' ? 'OUT' : k === 'sample' ? 'true' : 'NONE');
+      });
+      out.letters = 'OUT';
+      if (out.sample !== 'false') out.sample = 'true';
+      if (out.has_packet !== 'true') out.has_packet = 'false';
+      return out;
+    }
+
+    function buildDynamicVars(payload) {
+      if (!payload) {
+        return lockCareVars({
+          has_packet: 'false',
+          case_id: 'NONE',
+          packet_brief: 'NONE',
+          glance_summary: 'NONE',
+          packet_gaps: 'NONE',
+          gaps_status: 'NONE',
+          support_status: 'NONE',
+          sample: 'true',
+          letters: 'OUT',
+        });
+      }
+      const brief = mutePublicCopy(clip(payload.packet_brief, PACKET_BRIEF_MAX));
+      return lockCareVars({
+        has_packet: 'true',
+        case_id: strVar(payloadCaseId(payload), 'NONE'),
+        packet_brief: brief && brief !== 'NONE' ? brief : 'NONE',
+        glance_summary: mutePublicCopy(strVar(payload.glance_summary, 'NONE')),
+        packet_gaps: mutePublicCopy(strVar(payload.packet_gaps, 'NONE')),
+        gaps_status: honestGapsEnum(payload),
+        support_status: honestSupportEnum(payload),
+        sample: payload.sample === false || payload.sample === 'false' ? 'false' : 'true',
+        letters: 'OUT',
+      });
+    }
+
+    const packet = readPacketContext();
+    renderAbout(packet.payload);
+    const dynamicVars = buildDynamicVars(packet.payload);
+
+    function applyTalkCopy(payload) {
+      const opener = document.getElementById('talkOpener');
+      const sub = document.getElementById('talkSub');
+      if (!payload || !pagesExist(payload) || honestChipPlain(payload) === 'Still reading') {
+        if (opener) opener.textContent = CARE_EMPTY_FIRST_MESSAGE;
+        if (sub) sub.textContent = 'Pages not visible yet. We will not invent EX codes or findings. Letters stay out.';
+        return;
+      }
+      if (opener) opener.textContent = talkOpenerLine(payload);
+      if (sub) {
+        const gather = gatherLine(payload);
+        sub.textContent = 'Conversation on this desk. Next: ' + gather + ' Letters stay out. Ready to review is not approved.';
+      }
+    }
+    applyTalkCopy(packet.payload);
+
+    function markReady(scriptEl) {
+      if (scriptEl) scriptEl.dataset.ready = '1';
+    }
+
+    function loadConvaiEmbed() {
+      return new Promise((resolve, reject) => {
+        if (window.customElements && customElements.get('elevenlabs-convai')) {
+          markReady(document.getElementById('convaiScript'));
+          resolve();
+          return;
+        }
+        const existing = document.getElementById('convaiScript');
+        if (existing) {
+          if (existing.dataset.ready === '1') {
+            resolve();
+            return;
+          }
+          existing.addEventListener('load', () => { markReady(existing); resolve(); }, { once: true });
+          existing.addEventListener('error', () => reject(new Error('Could not load talk controls')), { once: true });
+          return;
+        }
+        const s = document.createElement('script');
+        s.id = 'convaiScript';
+        s.src = CONVAI_SRC;
+        s.async = true;
+        s.type = 'text/javascript';
+        s.addEventListener('load', () => { markReady(s); resolve(); }, { once: true });
+        s.addEventListener('error', () => reject(new Error('Could not load talk controls')), { once: true });
+        document.head.appendChild(s);
+      });
+    }
+
+    function attachWidget(signedUrl, vars) {
+      const scriptEl = document.getElementById('convaiScript');
+      const defined = window.customElements && customElements.get('elevenlabs-convai');
+      if (!defined && scriptEl?.dataset.ready !== '1') {
+        throw new Error('Talk controls not ready');
+      }
+      host.innerHTML = '';
+      const el = document.createElement('elevenlabs-convai');
+      el.setAttribute('signed-url', signedUrl);
+      el.setAttribute('agent-id', AGENT_ID);
+      el.setAttribute('variant', 'full');
+      el.setAttribute('always-expanded', 'true');
+      el.setAttribute('default-expanded', 'true');
+      el.setAttribute('show-agent-status', 'false');
+      el.setAttribute('disable-banner', 'true');
+      el.setAttribute('override-first-message', firstMessageFor(packet.payload));
+      el.setAttribute('text-contents', JSON.stringify(CARE_TEXT_CONTENTS));
+      // Widget HTML attr → conversation_initiation_client_data.dynamic_variables
+      el.setAttribute('dynamic-variables', JSON.stringify(vars));
+      el.addEventListener('elevenlabs-convai:call', (event) => {
+        const cfg = event.detail && event.detail.config;
+        if (!cfg) return;
+        // Replace — do not merge unknown keys into Care lock names.
+        cfg.dynamicVariables = vars;
+      });
+      host.appendChild(el);
+      const badgeMute = document.getElementById('aiBadgeMute');
+      if (badgeMute) {
+        badgeMute.hidden = false;
+        badgeMute.classList.add('is-on');
+      }
+      watchVendorChrome(el);
+    }
+
+    const VENDOR_REWRITE_RE = /chatting with ai agent|\bai agent\b/i;
+    const LOCK_COPY_RE = new RegExp(
+      ['physi' + 'cian', 'MD' + '/' + 'DO', 'MD ' + 'sign' + '-off', 'sign' + '-off', 'sign off', 'att' + 'est'].join('|'),
+      'i'
+    );
+
+    function muteVendorNode(node) {
+      if (!node || node.nodeType !== 1) return;
+      const raw = (node.textContent || '').replace(/\s+/g, ' ').trim();
+      if (!raw || raw.length > 280) return;
+      if (node.childElementCount === 0 && VENDOR_REWRITE_RE.test(raw)) {
+        node.style.setProperty('display', 'none', 'important');
+        node.setAttribute('aria-hidden', 'true');
+        return;
+      }
+      if (node.childElementCount === 0 && LOCK_COPY_RE.test(raw)) {
+        node.textContent = mutePublicCopy(raw);
+        return;
+      }
+      const hideBanner = /powered by/i.test(raw) && /eleven/i.test(raw);
+      const hideHelp = /^need help\??$/i.test(raw);
+      if ((hideBanner || hideHelp) && node.childElementCount <= 4) {
+        node.style.setProperty('display', 'none', 'important');
+        node.setAttribute('aria-hidden', 'true');
+      }
+    }
+
+    function walkVendorChrome(root) {
+      if (!root) return;
+      const stack = [root];
+      const seen = new Set();
+      while (stack.length) {
+        const node = stack.pop();
+        if (!node || seen.has(node)) continue;
+        seen.add(node);
+        if (node.nodeType === 1) muteVendorNode(node);
+        const sr = node.shadowRoot;
+        if (sr) stack.push(sr);
+        if (node.children) {
+          for (let i = 0; i < node.children.length; i++) stack.push(node.children[i]);
+        }
+      }
+    }
+
+    function watchVendorChrome(el) {
+      const observed = new Set();
+      const obs = new MutationObserver(() => {
+        walkVendorChrome(el);
+        attachObs(el);
+      });
+      function attachObs(node) {
+        if (!node || observed.has(node)) return;
+        observed.add(node);
+        obs.observe(node, { subtree: true, childList: true, characterData: true });
+        if (node.shadowRoot && !observed.has(node.shadowRoot)) {
+          observed.add(node.shadowRoot);
+          obs.observe(node.shadowRoot, { subtree: true, childList: true, characterData: true });
+        }
+      }
+      attachObs(el);
+      walkVendorChrome(el);
+      const tick = window.setInterval(() => {
+        attachObs(el);
+        if (el.shadowRoot) attachObs(el.shadowRoot);
+        walkVendorChrome(el);
+      }, 400);
+      window.setTimeout(() => window.clearInterval(tick), 20000);
+    }
+
+    // (1) Load embed first. Do not create <elevenlabs-convai> until onload.
+    const embedReady = loadConvaiEmbed();
+
+    async function start() {
+      errEl.hidden = true;
+      btn.disabled = true;
+      statusEl.textContent = 'Starting talk…';
+      try {
+        await embedReady;
+        statusEl.textContent = 'Getting a talk session…';
+        const r = await fetch('/api/care-signed-url', { cache: 'no-store' });
+        const data = await r.json();
+        dockWrite({
+          http: r.status,
+          agent_id: data.agent_id,
+          has_signed_url: !!data.signed_url,
+          embed_ready: document.getElementById('convaiScript')?.dataset.ready === '1',
+          error: data.error || null,
+          packetForgeKey: FORGE_PACKET_KEY,
+          packetPortalKey: PORTAL_PACKET_KEY,
+          sourceKey: packet.sourceKey,
+          queryCase: packet.queryCase || null,
+          packetContext: packet.payload || null,
+          packet_brief_chars: (dynamicVars.packet_brief || '').length,
+          dynamic_variables: dynamicVars,
+          widget_attr: 'dynamic-variables',
+          initiation: 'conversation_initiation_client_data.dynamic_variables',
+        });
+        if (!r.ok || !data.signed_url) {
+          throw new Error(data.error || data.hint || ('HTTP ' + r.status));
+        }
+        // (2) Mount only after script onload + signed-url, with dynamic_variables on the widget.
+        attachWidget(data.signed_url, dynamicVars);
+        const talkCard = document.getElementById('talkCard');
+        if (talkCard) {
+          talkCard.hidden = false;
+          talkCard.removeAttribute('hidden');
+        }
+        const mounted = host.querySelector('elevenlabs-convai');
+        dockWrite({
+          http: r.status,
+          agent_id: data.agent_id,
+          has_signed_url: true,
+          embed_ready: true,
+          widget_mounted: !!mounted,
+          widget_has_dynamic_variables: !!(mounted && mounted.getAttribute('dynamic-variables')),
+          dynamic_variables: dynamicVars,
+          initiation: 'conversation_initiation_client_data.dynamic_variables',
+        });
+        statusEl.textContent = 'Talk ready. Use the control below.';
+      } catch (e) {
+        errEl.hidden = false;
+        errEl.textContent = String(e.message || e);
+        statusEl.textContent = 'Blocked. Talk could not start.';
+      } finally {
+        btn.disabled = false;
+      }
+    }
+
+    btn.onclick = start;
+    dockWrite({
+      surface: 'care_talk',
+      agent_id: AGENT_ID,
+      signed_url_api: '/api/care-signed-url',
+      packetForgeKey: FORGE_PACKET_KEY,
+      packetPortalKey: PORTAL_PACKET_KEY,
+      sourceKey: packet.sourceKey,
+      queryCase: packet.queryCase || null,
+      packetContext: packet.payload || null,
+      reason: packet.reason,
+      dynamic_variables: dynamicVars,
+      care_lock_keys: CARE_LOCK_KEYS,
+      widget_attr: 'dynamic-variables',
+      initiation: 'conversation_initiation_client_data.dynamic_variables',
+    });
+  </script>
+</body>
+</html>

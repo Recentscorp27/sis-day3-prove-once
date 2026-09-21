@@ -1,0 +1,741 @@
+/* Security in Social · Soft Clinic elevated desk shell
+   Desktop-first ~1120–1280px. Not phone-toy chrome. Not equal card grids.
+   Vars: --text / --surface / --panel / --accent. */
+
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+:root {
+  --rail-w: 240px;
+  --care-w: 320px;
+}
+
+body {
+  margin: 0;
+  font-family: var(--sans);
+  background: var(--surface);
+  color: var(--text);
+  font-size: 17px;
+  line-height: 1.55;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+
+a { color: inherit; }
+
+/* Quiet SAMPLE corner watermark (not engineer SCRATCH ribbon) */
+.sample-mark {
+  position: fixed;
+  right: 18px;
+  bottom: 16px;
+  z-index: 40;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--faint);
+  opacity: 0.7;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* --- Top bar --- */
+.desk-top {
+  background: var(--panel);
+  border-bottom: 1px solid var(--line);
+  position: sticky;
+  top: 0;
+  z-index: 20;
+}
+
+.desk-top-inner {
+  max-width: var(--desk-max);
+  margin: 0 auto;
+  padding: 14px 28px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.brand {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  text-decoration: none;
+  color: var(--text);
+}
+
+.brand-mark {
+  font-family: var(--serif);
+  font-weight: 600;
+  font-size: 1.15rem;
+  letter-spacing: -0.02em;
+}
+
+.brand-sub {
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--faint);
+}
+
+.case-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--muted);
+  background: var(--surface-2);
+}
+
+.case-pill .dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--accent);
+}
+
+/* --- Shell: rail + main (+ optional care) --- */
+.desk-shell {
+  max-width: var(--desk-max);
+  margin: 0 auto;
+  padding: 28px 28px 72px;
+  display: grid;
+  grid-template-columns: var(--rail-w) minmax(0, 1fr);
+  gap: 32px;
+  align-items: start;
+}
+
+.desk-shell.has-care {
+  grid-template-columns: var(--rail-w) minmax(0, 1fr) var(--care-w);
+}
+
+@media (max-width: 1100px) {
+  .desk-shell.has-care {
+    grid-template-columns: var(--rail-w) minmax(0, 1fr);
+  }
+  .care-rail {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 820px) {
+  /* Phone stack: steps, then Ready pane, then Care. Reset the tablet
+     grid-column: 1 / -1 so Care is not auto-placed into row 1 and painted
+     over the sticky step nav. */
+  .desk-shell,
+  .desk-shell.has-care {
+    grid-template-columns: 1fr;
+    padding: 20px 16px 64px;
+    gap: 20px;
+  }
+  .case-rail {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 12px;
+    order: 1;
+    grid-column: 1;
+    grid-row: auto;
+  }
+  .pane {
+    order: 2;
+    grid-column: 1;
+    grid-row: auto;
+    min-height: 0;
+  }
+  .care-rail {
+    order: 3;
+    grid-column: 1;
+    grid-row: auto;
+    min-height: 0;
+  }
+  .case-rail .rail-title,
+  .case-rail .rail-meta { display: none; }
+  .step { flex: 1 1 auto; min-width: 100px; }
+}
+
+/* --- Left case rail --- */
+.case-rail {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 20px 16px;
+  position: sticky;
+  top: 72px;
+}
+
+@media (max-width: 820px) {
+  /* Phone chrome (covers 390–430): unstick the wrapped step+case rail.
+     Must sit AFTER the sticky rule so it wins the cascade. Sticky on
+     phone paints ~115px over Care (nav y=72–404, Care y≈289). */
+  .case-rail {
+    position: static;
+    top: auto;
+  }
+}
+
+.rail-title {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent-deep);
+  margin: 0 0 16px;
+  padding: 0 8px;
+}
+
+.step {
+  display: block;
+  text-decoration: none;
+  padding: 12px 12px;
+  border-radius: var(--radius-sm);
+  margin-bottom: 4px;
+  color: var(--muted);
+  border: 1px solid transparent;
+  transition: background 0.15s var(--ease), color 0.15s var(--ease);
+}
+
+.step:hover {
+  background: var(--surface-2);
+  color: var(--text);
+}
+
+.step.on {
+  background: var(--text);
+  color: var(--on-accent);
+  border-color: var(--text);
+}
+
+.step .n {
+  display: block;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  opacity: 0.7;
+  margin-bottom: 2px;
+}
+
+.step.on .n { opacity: 0.75; color: var(--accent-bright); }
+
+.step .l {
+  display: block;
+  font-size: 0.95rem;
+  font-weight: 650;
+  letter-spacing: -0.01em;
+}
+
+.rail-meta {
+  margin-top: 20px;
+  padding: 14px 12px 4px;
+  border-top: 1px solid var(--line);
+  font-size: 0.85rem;
+  color: var(--faint);
+  line-height: 1.45;
+}
+
+.rail-meta strong {
+  display: block;
+  color: var(--text);
+  font-weight: 650;
+  margin-bottom: 4px;
+}
+
+/* --- Main pane --- */
+.pane {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 40px 44px 48px;
+  min-height: 520px;
+  box-shadow: var(--shadow-quiet);
+}
+
+@media (max-width: 820px) {
+  .pane {
+    padding: 28px 20px 36px;
+    min-height: 0;
+  }
+}
+
+.kicker {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent-deep);
+  margin: 0 0 12px;
+}
+
+h1 {
+  font-family: var(--serif);
+  font-size: clamp(2rem, 3.2vw, 2.65rem);
+  font-weight: 600;
+  letter-spacing: -0.025em;
+  line-height: 1.15;
+  margin: 0 0 14px;
+  color: var(--text);
+}
+
+.lede {
+  margin: 0 0 32px;
+  color: var(--muted);
+  font-size: 1.12rem;
+  max-width: 38em;
+  line-height: 1.55;
+}
+
+/* --- CTAs --- */
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+  margin: 28px 0 0;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: var(--cta-min);
+  padding: 0 28px;
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: 1.05rem;
+  text-decoration: none;
+  border: 1.5px solid transparent;
+  cursor: pointer;
+  font-family: var(--sans);
+  transition: background 0.15s var(--ease), border-color 0.15s var(--ease), transform 0.1s;
+}
+
+.btn:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 3px;
+}
+
+.btn-primary {
+  background: var(--accent);
+  color: var(--on-accent);
+  border-color: var(--accent);
+  box-shadow: 0 4px 14px rgba(58, 125, 106, 0.22);
+}
+
+.btn-primary:hover {
+  background: var(--accent-deep);
+  border-color: var(--accent-deep);
+}
+
+.btn-ghost {
+  background: transparent;
+  color: var(--text);
+  border-color: var(--line-strong);
+}
+
+.btn-ghost:hover { background: var(--surface-2); }
+
+.btn-ink {
+  background: var(--text);
+  color: var(--on-accent);
+  border-color: var(--text);
+}
+
+.btn-ink:hover { background: var(--text-2); }
+
+.note {
+  color: var(--faint);
+  font-size: 0.92rem;
+  margin: 16px 0 0;
+  max-width: 36em;
+}
+
+/* --- Dense trust blocks (not equal toy cards) --- */
+.trust-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-top: 1px solid var(--line);
+}
+
+.trust-list li {
+  display: grid;
+  grid-template-columns: 140px 1fr;
+  gap: 20px;
+  padding: 18px 0;
+  border-bottom: 1px solid var(--line);
+  align-items: start;
+}
+
+@media (max-width: 640px) {
+  .trust-list li { grid-template-columns: 1fr; gap: 6px; }
+}
+
+.trust-list .lbl {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent-deep);
+  padding-top: 3px;
+}
+
+.trust-list .val {
+  color: var(--text);
+  font-size: 1.02rem;
+}
+
+.trust-list .val strong { font-weight: 650; }
+
+/* Status rows (Glance) */
+.status-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+.status-row {
+  display: grid;
+  grid-template-columns: 160px 1fr;
+  gap: 16px;
+  padding: 20px 22px;
+  border-bottom: 1px solid var(--line);
+  background: var(--panel);
+}
+
+.status-row:last-child { border-bottom: none; }
+
+.status-row.supported { border-left: 3px solid var(--accent); }
+.status-row.not-yet { border-left: 3px solid var(--accent-bright); }
+.status-row.next { border-left: 3px solid var(--text-3); }
+
+@media (max-width: 640px) {
+  .status-row { grid-template-columns: 1fr; gap: 8px; }
+}
+
+.status-tag {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  padding-top: 2px;
+}
+
+.status-row.supported .status-tag { color: var(--accent); }
+.status-row.not-yet .status-tag { color: var(--accent-deep); }
+
+.status-body h2 {
+  font-family: var(--serif);
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin: 0 0 6px;
+  letter-spacing: -0.015em;
+}
+
+.status-body p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.98rem;
+}
+
+/* Gaps chips */
+.chip-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 8px 0 0;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  font-size: 0.82rem;
+  font-weight: 650;
+  padding: 7px 14px;
+  border-radius: 999px;
+  background: var(--accent-soft);
+  color: var(--accent-deep);
+  border: 1px solid rgba(58, 125, 106, 0.28);
+}
+
+.chip.accent {
+  background: var(--accent-soft);
+  color: var(--accent);
+  border-color: rgba(58, 125, 106, 0.35);
+}
+
+.chip.quiet {
+  background: var(--surface-2);
+  color: var(--muted);
+  border-color: var(--line);
+}
+
+/* Drop zone (Upload) */
+.drop {
+  border: 1.5px dashed var(--line-strong);
+  border-radius: var(--radius);
+  padding: 48px 32px;
+  text-align: center;
+  background: linear-gradient(180deg, var(--surface-2) 0%, var(--panel) 100%);
+  margin: 8px 0 0;
+}
+
+.drop-icon {
+  width: 48px;
+  height: 48px;
+  margin: 0 auto 16px;
+  border-radius: 12px;
+  background: var(--accent);
+  color: var(--on-accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+  font-weight: 700;
+}
+
+.drop h2 {
+  font-family: var(--serif);
+  font-size: 1.35rem;
+  margin: 0 0 8px;
+  font-weight: 600;
+}
+
+.drop p {
+  margin: 0 auto;
+  color: var(--muted);
+  max-width: 28em;
+}
+
+/* Ready stamp */
+.ready-stamp {
+  border: 2px solid var(--accent);
+  border-radius: var(--radius);
+  padding: 28px 28px 24px;
+  background: var(--accent-soft);
+  margin: 0 0 28px;
+}
+
+.ready-stamp h2 {
+  font-family: var(--serif);
+  font-size: 1.65rem;
+  margin: 0 0 10px;
+  letter-spacing: -0.02em;
+  color: var(--text);
+}
+
+.ready-stamp p {
+  margin: 0;
+  color: var(--text-2);
+  font-size: 1.02rem;
+}
+
+.check-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.check-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--line);
+  font-size: 1.02rem;
+  color: var(--text);
+}
+
+.check-list li:last-child { border-bottom: none; }
+
+.check-list .box {
+  flex-shrink: 0;
+  width: 22px;
+  height: 22px;
+  border: 2px solid var(--text);
+  border-radius: 5px;
+  margin-top: 1px;
+  background: var(--panel);
+}
+
+.check-list .box.on {
+  background: var(--accent);
+  border-color: var(--accent);
+  box-shadow: inset 0 0 0 3px var(--panel);
+}
+
+/* --- Care Talk rail (embedded on Ready desk) --- */
+.care-rail {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  display: flex;
+  flex-direction: column;
+  min-height: 520px;
+  overflow: hidden;
+  box-shadow: var(--shadow-quiet);
+}
+
+@media (max-width: 820px) {
+  /* After the desktop min-height so Care can sit below the rail in flow. */
+  .care-rail {
+    min-height: 0;
+  }
+}
+
+.care-head {
+  padding: 18px 18px 14px;
+  border-bottom: 1px solid var(--line);
+  border-top: 3px solid var(--accent);
+}
+
+.care-head .kicker { margin-bottom: 6px; }
+
+.care-head h2 {
+  font-family: var(--serif);
+  font-size: 1.25rem;
+  margin: 0 0 4px;
+  font-weight: 600;
+  letter-spacing: -0.015em;
+}
+
+.care-head p {
+  margin: 0;
+  font-size: 0.88rem;
+  color: var(--faint);
+}
+
+.care-body {
+  flex: 1;
+  padding: 16px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  background: var(--surface-2);
+}
+
+.care-msg {
+  max-width: 100%;
+  padding: 12px 14px;
+  border-radius: 12px;
+  font-size: 0.92rem;
+  line-height: 1.45;
+}
+
+.care-msg.specialist {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  color: var(--text);
+  align-self: stretch;
+}
+
+.care-msg.you {
+  background: var(--text);
+  color: var(--on-accent);
+  align-self: flex-end;
+  max-width: 88%;
+}
+
+.care-msg .who {
+  display: block;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+  opacity: 0.65;
+}
+
+.care-foot {
+  padding: 12px 14px 16px;
+  border-top: 1px solid var(--line);
+  background: var(--panel);
+}
+
+.care-compose {
+  display: flex;
+  gap: 8px;
+}
+
+.care-compose input {
+  flex: 1;
+  min-height: 44px;
+  border: 1px solid var(--line-strong);
+  border-radius: 999px;
+  padding: 0 16px;
+  font-family: var(--sans);
+  font-size: 0.92rem;
+  background: var(--surface-2);
+  color: var(--text);
+}
+
+.care-compose button {
+  min-height: 44px;
+  padding: 0 18px;
+  border-radius: 999px;
+  border: none;
+  background: var(--accent);
+  color: var(--on-accent);
+  font-weight: 700;
+  font-family: var(--sans);
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+.care-sample-note {
+  margin: 8px 0 0;
+  font-size: 0.75rem;
+  color: var(--faint);
+  text-align: center;
+}
+
+/* Bottom Care stage variant (optional layout) */
+.care-stage {
+  margin-top: 28px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: 1fr 1.1fr;
+  background: var(--panel);
+}
+
+@media (max-width: 820px) {
+  .care-stage { grid-template-columns: 1fr; }
+}
+
+.care-stage-info {
+  padding: 28px 28px;
+  border-right: 1px solid var(--line);
+  background: var(--panel);
+}
+
+.care-stage-info h2 {
+  font-family: var(--serif);
+  font-size: 1.4rem;
+  margin: 0 0 10px;
+}
+
+.care-stage-thread {
+  background: var(--surface-2);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-height: 280px;
+}
