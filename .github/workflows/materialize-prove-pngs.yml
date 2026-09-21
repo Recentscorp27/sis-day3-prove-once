@@ -4,6 +4,7 @@ on:
     paths:
       - ".github/pack-b64/**"
       - ".github/workflows/materialize-prove-pngs.yml"
+      - ".github/assert-prove-pngs.py"
   workflow_dispatch:
 permissions:
   contents: write
@@ -23,13 +24,15 @@ jobs:
             exit 0
           fi
           cat "${chunks[@]}" | tr -d '\n' | base64 -d > /tmp/pack.tgz
+          tar -tzf /tmp/pack.tgz
           tar -xzf /tmp/pack.tgz
-          python3 -c "import hashlib,pathlib; magic=bytes.fromhex('89504e470d0a1a0a'); want={'portal-pr23-sample-out-5f84300/01-ready-phone-no-sample.png':'de2240dec2939107d235384385d677c68d363e44099143bb9a09ed862aef6017','portal-pr23-sample-out-5f84300/02-care-talk-no-sample.png':'64334918059a66d5252478fba43dee5221fbb7ae84d4011a99e5fea6e3d5be14','portal-pr23-sample-out-5f84300/03-desk-ready-no-sample.png':'b0622a8dbb29c8e04c03a7d19be74a79add9fcd539a396ce5a5601fec690d036'};
-for path,expect in want.items():
- b=pathlib.Path(path).read_bytes(); assert b[:8]==magic, path; got=hashlib.sha256(b).hexdigest(); assert got==expect, (path,got); print(path,'ok',got)"
+          python3 .github/assert-prove-pngs.py
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add -- portal-pr23-sample-out-5f84300
-          if git diff --cached --quiet; then echo pack already materialized; exit 0; fi
+          if git diff --cached --quiet; then
+            echo pack already materialized
+            exit 0
+          fi
           git commit -m "Materialize Soft CLEAR prove pack PNGs + tip-html (tip 5f84300)"
           git push
