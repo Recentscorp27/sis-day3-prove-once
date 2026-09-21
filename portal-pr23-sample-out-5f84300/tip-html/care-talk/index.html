@@ -84,14 +84,14 @@
     .care-actions .btn { width: 100%; text-decoration: none; }
     .care-page .talk-card[hidden],
     .care-page #aboutCard[hidden] { display: none !important; }
+    .sample-mark { display: none !important; }
     .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
     .dock { border-top: 2px solid var(--text); background: var(--text); color: var(--surface-2); padding: .75rem 1rem; font-size: .85rem; border-radius: var(--radius); }
     .dock summary { cursor: pointer; color: var(--accent-bright); font-weight: 700; margin-bottom: .5rem; font-family: var(--sans); }
     pre { margin: 0; white-space: pre-wrap; overflow: auto; max-height: 220px; }
   </style>
-<style id="soft-clear-sample-out">.sample-mark,.sample-mark *{display:none!important;visibility:hidden!important;opacity:0!important;font-size:0!important;width:0!important;height:0!important;overflow:hidden!important}</style></head>
+</head>
 <body>
-  <div class="sample-mark" aria-hidden="true"></div>
   <header class="desk-top">
     <div class="desk-top-inner">
       <a class="brand" href="/">
@@ -122,7 +122,7 @@
       <h2>Staff packet board</h2>
       <p class="sub">Staff packet board.</p>
     </div>
-    <script src="/care-talk/about-boot.js"></script>
+    <script src="./about-boot.js"></script>
     <div class="card talk-card" id="talkCard" hidden>
       <h2 class="sr-only">Live talk</h2>
       <div class="talk-stage">
@@ -436,7 +436,7 @@
       return 'NEEDS_RECORDS';
     }
     function listPrimaryGap(x) {
-      if (!x) return '<p class="sub">No extra missing-record list on this sample.</p>';
+      if (!x) return '<p class="sub">No extra missing-record list on this packet.</p>';
       const plain = gapPlain(x);
       const cites = gapCites(x);
       const note = (x && typeof x === 'object' && x.note) ? x.note : '';
@@ -540,9 +540,8 @@
       const deskLink = document.getElementById('deskLink');
       const id = normalizeCaseId(payloadCaseId(payload)) || payloadCaseId(payload) || '';
       const sample = !(payload && payloadIsUpload(payload, id));
-      const mark = sample ? '' : '';
       if (kicker) kicker.textContent = id ? (id + ' · on your desk') : 'On your desk';
-      if (pill) pill.textContent = (id || 'Talk with Care') + (sample ? '' : '');
+      if (pill) pill.textContent = 'Talk with Care';
       if (deskLink) deskLink.href = id ? ('/#' + encodeURIComponent(id) + '/packet') : '/';
       if (!thread) return;
       function bubble(who, text, kind) {
@@ -550,9 +549,9 @@
       }
       if (!payload || !pagesExist(payload) || honestChipPlain(payload) === 'Still reading') {
         thread.innerHTML =
-          bubble('Care' + mark, 'Pages not visible yet. We cannot see your file yet. Letters stay out.', 'specialist') +
-          bubble('You' + mark, 'Why does it say not ready to release?', 'you') +
-          bubble('Care' + mark, 'Ready to review is not approved. We will not invent pages or findings.', 'specialist');
+          bubble('Care', 'Pages not visible yet. We cannot see your file yet. Letters stay out.', 'specialist') +
+          bubble('You', 'Why does it say not ready to release?', 'you') +
+          bubble('Care', 'Ready to review is not approved. We will not invent pages or findings.', 'specialist');
         return;
       }
       if (id === 'CASE-001' && sample) {
@@ -563,9 +562,9 @@
         return;
       }
       thread.innerHTML =
-        bubble('Care' + mark, talkOpenerLine(payload), 'specialist') +
-        bubble('You' + mark, 'So this is not ready to release?', 'you') +
-        bubble('Care' + mark, 'Correct. Ready to review is not approved. Specialists assemble the file. Letters stay out.', 'specialist');
+        bubble('Care', talkOpenerLine(payload), 'specialist') +
+        bubble('You', 'So this is not ready to release?', 'you') +
+        bubble('Care', 'Correct. Ready to review is not approved. Specialists assemble the file. Letters stay out.', 'specialist');
     }
     function renderAbout(payload) {
       paintThread(payload);
@@ -601,16 +600,15 @@
       const count = extracting ? 0 : (Number.isFinite(payload.exhibitCount) ? payload.exhibitCount : labels.length);
       const chips = oneChipFromPayload(payload);
       const back = '/#' + encodeURIComponent(caseId || '') + '/packet';
-      const mark = upload ? 'this-device file' : 'this packet';
-      const packetWord = upload ? 'this packet' : 'this packet';
-      const footerMark = upload ? '' : '';
+      const mark = upload ? 'this-device file' : '';
+      const packetWord = 'this packet';
       const missingHtml = extracting
         ? '<p class="sub">Pages not visible yet. No invented EX codes. No invented findings.</p>'
         : listPrimaryGap(top);
       el.className = 'card pin';
       el.innerHTML =
         '<h2>Staff packet board</h2>' +
-        '<p class="meta plain"><strong>' + esc(caseId) + '</strong> · ' + esc(mark) + '</p>' +
+        '<p class="meta plain"><strong>' + esc(caseId) + '</strong>' + (mark ? ' · ' + esc(mark) : '') + '</p>' +
         (notes ? '<p class="plain">' + esc(notes) + '</p>' : '') +
         (chips ? '<div class="status-row">' + chips + '</div>' : '') +
         (showsHtml ? '<span class="field-lbl">What the file shows</span>' + showsHtml : '') +
@@ -619,7 +617,7 @@
         '<p class="plain">Ready to review is not approved. Extracted is not verified.</p>' +
         (extracting ? '' : '<p class="plain"><strong>' + esc(String(count)) + '</strong> file' + (count === 1 ? '' : 's') + ' in ' + packetWord + '</p>') +
         (labels.length ? listEveryday(labels) : '') +
-        '<p class="footer-lock">Letters: <span class="tag locked">OUT</span>' + footerMark + '</p>';
+        '<p class="footer-lock">Letters: <span class="tag locked">OUT</span></p>';
       if (deskLink) deskLink.href = back;
     }
 

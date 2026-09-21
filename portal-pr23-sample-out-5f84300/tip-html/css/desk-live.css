@@ -136,16 +136,18 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 44px;
+  min-height: var(--cta-min);
+  width: 100%;
   margin: 0 0 10px;
   padding: 0 16px;
   border-radius: 999px;
   background: var(--accent);
   color: var(--on-accent);
   font-weight: 700;
-  font-size: 0.9rem;
+  font-size: 1.05rem;
   text-decoration: none;
   font-family: var(--sans);
+  border: 1.5px solid var(--accent);
 }
 
 .care-talk-link:hover {
@@ -319,12 +321,20 @@ ol.gap-board h3 {
 }
 
 @media (max-width: 820px) {
-  .case-switch {
+  /* Ready face: picker above H1 is chrome-first HOLD. Hide on Ready.
+     Other phone steps keep a full-width second row. */
+  .desk-shell.has-care .case-switch,
+  body.sis-phone-ready .case-switch {
+    display: none !important;
+  }
+
+  .desk-shell:not(.has-care) .case-switch {
     display: flex;
     flex-wrap: wrap;
+    flex: 1 1 100%;
     gap: 8px;
     border-top: 0;
-    padding: 0;
+    padding: 4px 0 0;
     margin: 0;
     width: 100%;
   }
@@ -346,6 +356,11 @@ ol.gap-board h3 {
   }
 
   .care-foot {
-    padding: 16px 16px 18px;
+    padding: 10px 14px 14px;
+    border-top: 0;
+  }
+
+  .care-listen {
+    display: none;
   }
 }

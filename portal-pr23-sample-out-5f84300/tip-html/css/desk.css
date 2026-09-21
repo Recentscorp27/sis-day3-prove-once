@@ -10,7 +10,7 @@ html { scroll-behavior: smooth; }
 
 :root {
   --rail-w: 240px;
-  --care-w: 320px;
+  --care-w: 340px;
 }
 
 body {
@@ -26,20 +26,9 @@ body {
 
 a { color: inherit; }
 
-/* Quiet SAMPLE corner watermark (not engineer SCRATCH ribbon) */
+/* Soft CLEAR Ready: SAMPLE watermark off claimant Care/Ready face */
 .sample-mark {
-  position: fixed;
-  right: 18px;
-  bottom: 16px;
-  z-index: 40;
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--faint);
-  opacity: 0.7;
-  pointer-events: none;
-  user-select: none;
+  display: none !important;
 }
 
 /* --- Top bar --- */
@@ -89,12 +78,13 @@ a { color: inherit; }
   align-items: center;
   gap: 8px;
   padding: 6px 12px;
-  border: 1px solid var(--line);
+  border: 0;
   border-radius: 999px;
-  font-size: 0.82rem;
-  font-weight: 600;
-  color: var(--muted);
-  background: var(--surface-2);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--accent-deep);
+  background: var(--accent-soft);
 }
 
 .case-pill .dot {
@@ -129,21 +119,20 @@ a { color: inherit; }
 }
 
 @media (max-width: 820px) {
-  /* Phone stack: steps, then Ready pane, then Care. Reset the tablet
-     grid-column: 1 / -1 so Care is not auto-placed into row 1 and painted
-     over the sticky step nav. */
+  /* Phone stack: thin step strip, then Ready pane (H1 first), then Care.
+     Do not wrap steps into 2×2 cards — that is chrome-first HOLD. */
   .desk-shell,
   .desk-shell.has-care {
     grid-template-columns: 1fr;
-    padding: 20px 16px 64px;
-    gap: 20px;
+    padding: 12px 16px 28px;
+    gap: 12px;
   }
   .case-rail {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    gap: 8px;
-    padding: 12px;
+    gap: 6px;
+    padding: 6px;
     order: 1;
     grid-column: 1;
     grid-row: auto;
@@ -161,8 +150,25 @@ a { color: inherit; }
     min-height: 0;
   }
   .case-rail .rail-title,
-  .case-rail .rail-meta { display: none; }
-  .step { flex: 1 1 auto; min-width: 100px; }
+  .case-rail .rail-meta,
+  .case-rail .rail-case,
+  .case-rail .rail-letters { display: none; }
+  .step {
+    flex: 1 1 0;
+    min-width: 0;
+    margin-bottom: 0;
+    padding: 10px 4px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .step .n { display: none; }
+  .step .l {
+    font-size: 0.8rem;
+    letter-spacing: 0;
+    white-space: nowrap;
+  }
 }
 
 /* --- Left case rail --- */
@@ -190,9 +196,39 @@ a { color: inherit; }
   font-weight: 700;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--accent-deep);
-  margin: 0 0 16px;
+  color: var(--muted);
+  margin: 0 0 10px;
   padding: 0 8px;
+}
+
+.rail-case {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--accent-soft);
+  color: var(--accent-deep);
+  border-radius: 999px;
+  padding: 6px 10px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  margin: 0 0 18px;
+}
+
+.rail-case .dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--accent);
+}
+
+.rail-letters {
+  margin-top: 16px;
+  padding: 0 8px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--muted);
+  line-height: 1.45;
 }
 
 .step {
@@ -212,22 +248,23 @@ a { color: inherit; }
 }
 
 .step.on {
-  background: var(--text);
+  background: var(--accent);
   color: var(--on-accent);
-  border-color: var(--text);
+  border-color: var(--accent);
 }
 
 .step .n {
   display: block;
-  font-size: 0.68rem;
-  font-weight: 700;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  opacity: 0.7;
-  margin-bottom: 2px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0;
+  text-transform: none;
+  opacity: 0.9;
+  margin-top: 2px;
+  margin-bottom: 0;
 }
 
-.step.on .n { opacity: 0.75; color: var(--accent-bright); }
+.step.on .n { opacity: 0.9; color: var(--on-accent); }
 
 .step .l {
   display: block;
@@ -264,7 +301,7 @@ a { color: inherit; }
 
 @media (max-width: 820px) {
   .pane {
-    padding: 28px 20px 36px;
+    padding: 16px 16px 12px;
     min-height: 0;
   }
 }
@@ -522,6 +559,61 @@ h1 {
   max-width: 28em;
 }
 
+.pane.teach-ready {
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+  padding-left: 4px;
+  padding-right: 4px;
+  min-height: 0;
+}
+
+.ready-teach {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  margin-top: 18px;
+}
+
+@media (max-width: 820px) {
+  .ready-teach { grid-template-columns: 1fr; }
+}
+
+.teach-card {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 16px 18px 18px;
+}
+
+.teach-card .kicker {
+  margin-bottom: 8px;
+  color: var(--muted);
+}
+
+.show-lead {
+  font-weight: 650;
+  font-size: 1.05rem;
+  margin: 8px 0 0;
+  color: var(--text);
+  line-height: 1.35;
+}
+
+.show-meta {
+  margin: 4px 0 0;
+  color: var(--muted);
+  font-size: 0.92rem;
+  font-weight: 600;
+}
+
+a.gap-check {
+  display: inline-flex;
+  margin-top: 14px;
+  padding: 0 18px;
+  font-size: 0.95rem;
+  text-decoration: none;
+}
+
 /* Ready stamp */
 .ready-stamp {
   border: 2px solid var(--accent);
@@ -595,13 +687,13 @@ h1 {
   /* After the desktop min-height so Care can sit below the rail in flow. */
   .care-rail {
     min-height: 0;
+    border-color: var(--accent);
   }
 }
 
 .care-head {
   padding: 18px 18px 14px;
   border-bottom: 1px solid var(--line);
-  border-top: 3px solid var(--accent);
 }
 
 .care-head .kicker { margin-bottom: 6px; }
@@ -625,8 +717,8 @@ h1 {
   padding: 16px 18px;
   display: flex;
   flex-direction: column;
-  gap: 14px;
-  background: var(--surface-2);
+  gap: 10px;
+  background: var(--panel);
 }
 
 .care-msg {
@@ -638,17 +730,18 @@ h1 {
 }
 
 .care-msg.specialist {
-  background: var(--panel);
-  border: 1px solid var(--line);
+  background: var(--accent-soft);
+  border: 0;
   color: var(--text);
   align-self: stretch;
 }
 
 .care-msg.you {
-  background: var(--text);
-  color: var(--on-accent);
-  align-self: flex-end;
-  max-width: 88%;
+  background: var(--panel);
+  color: var(--text);
+  border: 1px solid var(--line);
+  align-self: stretch;
+  max-width: 100%;
 }
 
 .care-msg .who {
@@ -738,4 +831,190 @@ h1 {
   flex-direction: column;
   gap: 12px;
   min-height: 280px;
+}
+
+/* Phone Ready teach-first (D1). Must sit AFTER unscoped .step/.case-rail
+   rules so the thin strip wins the cascade. Desk 03 / Care 02 unchanged. */
+@media (max-width: 820px) {
+  /* Real word spaces — negative Fraunces tracking reads as run-on. */
+  h1,
+  .brand-mark,
+  .brand-sub,
+  .care-head h2,
+  .step .l {
+    letter-spacing: 0;
+    word-spacing: 0.12em;
+  }
+
+  h1 {
+    font-size: 1.7rem;
+    margin: 0 0 6px;
+    line-height: 1.2;
+  }
+
+  .sis-desk .desk-top-inner {
+    padding: 8px 14px 6px;
+    gap: 10px;
+  }
+
+  /* D1 face brand is Your desk + CASE chip. Keep Security in Social
+     in the document title; small spaced mark stays for a11y readers. */
+  .sis-desk .brand {
+    flex-direction: row;
+    align-items: baseline;
+    gap: 8px;
+  }
+
+  .sis-desk .brand-mark {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+  }
+
+  .sis-desk .brand-sub {
+    font-family: var(--serif);
+    font-size: 1.4rem;
+    font-weight: 600;
+    letter-spacing: 0;
+    word-spacing: 0.08em;
+    text-transform: none;
+    color: var(--text);
+  }
+
+  .sis-desk .case-pill {
+    flex-shrink: 0;
+  }
+
+  .sis-desk .desk-shell,
+  .sis-desk .desk-shell.has-care {
+    padding: 8px 12px 16px;
+    gap: 8px;
+  }
+
+  .sis-desk .case-rail {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: stretch;
+    gap: 6px;
+    padding: 4px;
+  }
+
+  .sis-desk .step,
+  .sis-desk a.step,
+  .sis-desk .step.on {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 1 1 0;
+    min-width: 0;
+    margin: 0;
+    padding: 8px 4px;
+    min-height: 36px;
+    border-radius: 999px;
+    text-align: center;
+  }
+
+  .sis-desk .step .n,
+  .sis-desk .step.on .n {
+    display: none !important;
+  }
+
+  .sis-desk .step .l {
+    display: block;
+    font-size: 0.78rem;
+    letter-spacing: 0;
+    word-spacing: 0.04em;
+    white-space: nowrap;
+  }
+
+  .lede {
+    margin: 0 0 10px;
+    font-size: 0.92rem;
+    line-height: 1.35;
+  }
+
+  .lede-desk {
+    display: none;
+  }
+
+  .sis-desk .pane {
+    padding: 8px 8px 4px;
+  }
+
+  .pane.teach-ready {
+    padding: 0;
+  }
+
+  .ready-teach {
+    gap: 8px;
+    margin-top: 0;
+  }
+
+  .teach-card {
+    padding: 10px 12px 12px;
+  }
+
+  .show-lead {
+    font-size: 0.95rem;
+    margin: 2px 0 0;
+  }
+
+  .show-meta {
+    margin: 2px 0 0;
+    font-size: 0.85rem;
+  }
+
+  a.gap-check {
+    display: none;
+  }
+
+  .sis-desk .care-head {
+    padding: 10px 12px 2px;
+    border-bottom: 0;
+  }
+
+  .sis-desk .care-head p:not(.kicker) {
+    display: none;
+  }
+
+  .sis-desk .care-head .kicker {
+    display: block;
+    margin-bottom: 2px;
+  }
+
+  .sis-desk .care-head h2 {
+    font-size: 1.15rem;
+    margin: 0;
+  }
+
+  .sis-desk .care-body {
+    padding: 6px 12px 2px;
+    gap: 6px;
+  }
+
+  /* D1 first face: two bubbles, then Continue talking. */
+  .sis-desk .care-body .care-msg:nth-child(3) {
+    display: none;
+  }
+
+  .sis-desk .care-listen {
+    display: none;
+  }
+
+  .sis-desk .care-msg {
+    padding: 8px 10px;
+    font-size: 0.84rem;
+  }
+
+  .sis-desk .care-talk-link {
+    margin: 0;
+  }
+
+  .sis-desk .care-foot {
+    padding: 8px 12px 12px;
+  }
 }

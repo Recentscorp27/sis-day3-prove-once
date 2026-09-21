@@ -24,11 +24,11 @@ Ready Soft Clinic: SAMPLE chips/badges/watermarks/body labels out. Teach-first H
 
 Real PNG magic `89 50 4E 47 0D 0A 1A 0A`. Not HTML renamed.
 
-| File | Size | sha256 |
+| File | Size | sha256 prefix |
 | --- | --- | --- |
-| `01-ready-phone-no-sample.png` | 390×844 | `de2240dec2939107d235384385d677c68d363e44099143bb9a09ed862aef6017` |
-| `02-care-talk-no-sample.png` | 430×900 | `64334918059a66d5252478fba43dee5221fbb7ae84d4011a99e5fea6e3d5be14` |
-| `03-desk-ready-no-sample.png` | 1280×800 | `b0622a8dbb29c8e04c03a7d19be74a79add9fcd539a396ce5a5601fec690d036` |
+| `01-ready-phone-no-sample.png` | 390×844 | `de2240dec293` |
+| `02-care-talk-no-sample.png` | 430×900 | `64334918059a` |
+| `03-desk-ready-no-sample.png` | 1280×800 | `b0622a8dbb29` |
 
 ## tip-html/
 
