@@ -2,7 +2,6 @@ name: materialize-prove-pack
 on:
   push:
     paths:
-      - ".github/pack-b64/**"
       - ".github/workflows/materialize-prove-pngs.yml"
       - ".github/assert-prove-pngs.py"
   workflow_dispatch:
@@ -13,18 +12,28 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Assemble b64 chunks, extract tar, commit real PNGs + tip-html
+      - name: Download prove tar, extract, commit real PNGs
         run: |
           set -euo pipefail
-          shopt -s nullglob
-          chunks=(.github/pack-b64/pack.b64.*)
-          echo "chunks=${#chunks[@]}"
-          if [ "${#chunks[@]}" -lt 10 ]; then
-            echo "waiting for all 10 chunks"
-            exit 0
-          fi
-          cat "${chunks[@]}" | tr -d '\n' | base64 -d > /tmp/pack.tgz
-          tar -tzf /tmp/pack.tgz
+          WANT_TGZ=87df5cbc0014819bcb5d79b1c47c6fc644471c3d3b74fb10fad948a5f1ab1274
+          urls=(
+            https://d.uguu.se/mShnnfjl.tar.gz
+            https://litter.catbox.moe/s0n3wx.gz
+            https://tmpfiles.org/dl/1789998231.bd3df968cc820e7c/wbw7xAsMsCnM/portal-pr23-sample-out-5f84300.tar.gz
+          )
+          ok=0
+          for u in "${urls[@]}"; do
+            echo "fetch $u"
+            if curl -fsSL --retry 3 -o /tmp/pack.tgz "$u"; then
+              got=$(sha256sum /tmp/pack.tgz | awk '{print $1}')
+              echo "got $got"
+              if [ "$got" = "$WANT_TGZ" ]; then
+                ok=1
+                break
+              fi
+            fi
+          done
+          test "$ok" = 1
           tar -xzf /tmp/pack.tgz
           python3 .github/assert-prove-pngs.py
           git config user.name "github-actions[bot]"
